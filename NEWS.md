@@ -1,3 +1,7 @@
+# ggmemo (development version)
+
+* Package skeleton and infrastructure set up.
+
 <!--
 NEWS.md conventions:
 - One heading per release: # ggmemo 0.1.0
@@ -9,7 +13,3 @@ NEWS.md conventions:
   add a new "(development version)" section above it for ongoing work.
 - See https://r-pkgs.org/lifecycle.html#sec-lifecycle-news for full guidance.
 -->
-
-# ggmemo (development version)
-
-* Package skeleton and infrastructure set up.
