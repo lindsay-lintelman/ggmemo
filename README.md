@@ -22,7 +22,7 @@ You can install the development version of ggmemo from
 
 ``` r
 # install.packages("pak")
-pak::pak("USERNAME/ggmemo")
+pak::pak("lindsay-lintelman/ggmemo")
 ```
 
 ## Example
