@@ -34,5 +34,6 @@
 "_PACKAGE"
 
 ## usethis namespace: start
+#' @importFrom rlang .env
 ## usethis namespace: end
 NULL

@@ -27,10 +27,26 @@ pak::pak("lindsay-lintelman/ggmemo")
 
 ## Example
 
-<!-- Coming in Week 2: a real before/after business chart example showing
-     how annotate_callout() and annotate_change() simplify annotation code.
-     The example will show a typical quarterly revenue chart, first with
-     manual ggplot2 annotation, then with the ggmemo equivalents. -->
+Here’s a U.S. unemployment time series with a callout pointing at the
+Great Recession peak — one line of ggmemo code instead of manual arrow
+and label coordinates:
 
-*Examples coming soon — the annotation functions are under active
-development.*
+``` r
+library(ggplot2)
+library(ggmemo)
+
+ggplot(economics, aes(x = date, y = unemploy)) +
+  geom_line() +
+  annotate_callout(
+    economics,
+    where = date == as.Date("2009-10-01"),
+    label = "Peak unemployment",
+    position = "bottom-left"
+  ) +
+  labs(
+    title = "U.S. Unemployment (thousands)",
+    x = NULL, y = NULL
+  )
+```
+
+<img src="man/figures/README-example-1.png" alt="" width="100%" />

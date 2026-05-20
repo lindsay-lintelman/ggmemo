@@ -1,5 +1,6 @@
 # ggmemo (development version)
 
+* Added `annotate_callout()` for pointing at a data row with an arrow and label.
 * Package skeleton and infrastructure set up.
 
 <!--
