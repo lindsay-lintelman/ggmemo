@@ -29,52 +29,52 @@ they annotate one.
 
 ## Planned functions (v0.1)
 
-### `annotate_callout()`
+### `annotate_callout()` (IMPLEMENTED — Week 2)
 
 Point at a specific data row with an arrow and label.
 
 ```r
-annotate_callout(
-  data,
-  where,
-  label,
-  nudge = NULL
-)
+annotate_callout(data, where, label, position = "top-right")
 ```
 
 | Argument | Type | Purpose |
 |----------|------|---------|
 | `data` | data.frame | The same data the plot uses (to locate the target row) |
-| `where` | expression | A filter expression identifying the row to annotate, e.g. `quarter == "Q4" & year == 2024` |
-| `label` | character | The annotation text |
-| `nudge` | numeric vector or NULL | Optional (x, y) offset for the label. If NULL, auto-positioned. |
+| `where` | tidy-eval expression | A filter expression identifying exactly one row, e.g. `date == as.Date("2009-10-01")` |
+| `label` | character | A single string for the annotation text |
+| `position` | character | One of "top-right", "top-left", "bottom-right", "bottom-left" |
 
-Returns a ggplot2 layer (geom) that can be added with `+`.
+Uses `rlang::enquo()` + `dplyr::filter()` for row selection. Built on
+`ggpp::geom_label_s()` with auto-computed nudge values based on data ranges.
+Returns a ggplot2 layer.
 
-### `annotate_change()`
+### `annotate_change()` (Week 3)
 
 Auto-compute and label the delta between two data rows.
 
 ```r
-annotate_change(
-  data,
-  from,
-  to,
-  mapping = NULL,
-  format = "percent"
-)
+annotate_change(data, from, to, mapping, format = "percent")
 ```
 
 | Argument | Type | Purpose |
 |----------|------|---------|
 | `data` | data.frame | The same data the plot uses |
-| `from` | expression | Filter expression for the start row |
-| `to` | expression | Filter expression for the end row |
-| `mapping` | aes() or NULL | Which aesthetic holds the value to delta (defaults to y) |
+| `from` | tidy-eval expression | Filter expression for the start row |
+| `to` | tidy-eval expression | Filter expression for the end row |
+| `mapping` | aes() | Which aesthetic holds the value to delta (required — e.g. `aes(y = revenue)`) |
 | `format` | character | How to format the delta: "percent", "absolute", "both" |
 
-Returns a ggplot2 layer with an arrow connecting the two points and a
-formatted label showing the change (e.g., "+23.4%", "-$1.2M").
+Design decisions from Week 2 mockup review:
+- **Straight arrow** connecting the two data points (not curved)
+- **Label at midpoint** of the arrow (not floating above)
+- **Color-coded text:** dark red (#B22222) for negative changes with minus sign,
+  dark green (#2E7D32) for positive changes with plus sign
+- **Bold text** in a white label box, matching annotate_callout() styling
+- **`mapping` is required** (not optional) — the user must specify which
+  column holds the value to compute the delta on, so the calculation is
+  always explicit and correct
+
+Returns a list of ggplot2 layers (segment + label) that can be added with `+`.
 
 ## Explicit non-goals for v0.1
 
