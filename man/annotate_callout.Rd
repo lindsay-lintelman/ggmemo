@@ -9,7 +9,11 @@ annotate_callout(data, where, label, position = "top-right", nudge = NULL)
 \arguments{
 \item{data}{A data frame. Should be the same data frame used in the
 ggplot, or a subset of it. Must contain the columns mapped to x and y
-in the plot's \code{aes()}.}
+in the plot's \code{aes()}. Note: the automatic nudge heuristic estimates
+label offset from the data ranges, but it guesses which columns are
+x and y. For data frames with many numeric columns, passing a
+two-column subset (e.g., \code{data[, c("date", "sales")]}) or setting
+\code{nudge} explicitly gives more reliable placement.}
 
 \item{where}{<\link[rlang:args_data_masking]{tidy-eval}> A filtering
 expression that identifies exactly one row of \code{data}. For example,

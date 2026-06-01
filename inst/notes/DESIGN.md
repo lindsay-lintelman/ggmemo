@@ -89,3 +89,27 @@ We are NOT building:
   support is a possible v0.2 feature.
 - **Stat layers or computed aesthetics.** We compute deltas in R code before
   passing to ggpp, not via the ggplot2 stat system. Keeps things simple.
+
+## Known limitations (v0.1)
+
+- **Nudge heuristic guesses wrong on wide data frames.** `annotate_callout()`
+  uses `estimate_nudge()` to compute label offset from data ranges, but it
+  picks the first numeric column as the y-axis proxy. On data frames with
+  many numeric columns (like `economics` or `txhousing`), it may pick a
+  column with a very different range than the one actually plotted. Workaround:
+  pass `nudge = c(x, y)` explicitly or subset the data to just the plotted
+  columns. A proper fix would require access to the parent plot's `aes()`
+  mapping, which annotation functions don't have.
+
+- **x-column heuristic in `annotate_change()`.** Similarly guesses which
+  column is the x-axis. Prefers Date > numeric/factor > character, but can
+  still pick wrong on wide data. Less likely to cause visible problems
+  because the midpoint calculation is more forgiving than nudge scaling.
+
+## v0.2 ideas
+
+- Smarter nudge: accept an `aes()` mapping or infer from the plot object.
+- `...` pass-through to underlying ggpp/ggplot2 geoms for fine styling control.
+- Colorblind mode for `annotate_change()` (blue/orange instead of green/red).
+- Faceting-aware annotations.
+- `annotate_milestone()` — vertical reference line with label (e.g., "Product launch").

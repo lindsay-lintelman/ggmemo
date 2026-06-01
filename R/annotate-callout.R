@@ -48,7 +48,11 @@
 #'
 #' @param data A data frame. Should be the same data frame used in the
 #'   ggplot, or a subset of it. Must contain the columns mapped to x and y
-#'   in the plot's `aes()`.
+#'   in the plot's `aes()`. Note: the automatic nudge heuristic estimates
+#'   label offset from the data ranges, but it guesses which columns are
+#'   x and y. For data frames with many numeric columns, passing a
+#'   two-column subset (e.g., `data[, c("date", "sales")]`) or setting
+#'   `nudge` explicitly gives more reliable placement.
 #' @param where <[tidy-eval][rlang::args_data_masking]> A filtering
 #'   expression that identifies exactly one row of `data`. For example,
 #'   `year == 2020` or `quarter == "Q4" & region == "West"`. An error is
