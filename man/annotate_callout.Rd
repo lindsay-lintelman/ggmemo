@@ -4,7 +4,7 @@
 \alias{annotate_callout}
 \title{Add a callout annotation to a ggplot}
 \usage{
-annotate_callout(data, where, label, position = "top-right", nudge = NULL)
+annotate_callout(data, where, label, position = "top-right", nudge = NULL, ...)
 }
 \arguments{
 \item{data}{A data frame. Should be the same data frame used in the
@@ -33,6 +33,10 @@ heuristic works well when \code{data} contains only the plotted columns;
 if \code{data} has many numeric columns (like \link[ggplot2:economics]{ggplot2::economics}),
 passing a two-column subset or setting \code{nudge} explicitly avoids
 the heuristic picking the wrong column's range.}
+
+\item{...}{Additional arguments passed to \code{\link[ggpp:geom_label_s]{ggpp::geom_label_s()}}.
+Use to override defaults like \code{size}, \code{colour}, \code{fill}, \code{alpha},
+or \code{arrow}.}
 }
 \value{
 A ggplot2 layer that can be added to a plot with \code{+}.

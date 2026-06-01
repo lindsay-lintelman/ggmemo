@@ -4,7 +4,15 @@
 \alias{annotate_change}
 \title{Annotate the change between two data points on a ggplot}
 \usage{
-annotate_change(data, from, to, value, format = "percent")
+annotate_change(
+  data,
+  from,
+  to,
+  value,
+  format = "percent",
+  colors = c(up = "#2E7D32", down = "#B22222", flat = "#808080"),
+  ...
+)
 }
 \arguments{
 \item{data}{A data frame. Should be the same data frame used in the
@@ -33,6 +41,14 @@ Use \code{"points"} when the data is already a rate or percentage
 (e.g., savings rate, market share) — it labels the difference
 in percentage points (e.g., "+9.8 \%pts") instead of computing
 a misleading percent-of-percent.}
+
+\item{colors}{Named character vector of length 3 with hex color values
+for the arrow and label. Names must be \code{"up"}, \code{"down"}, and \code{"flat"}.
+Defaults to dark green, dark red, and grey.}
+
+\item{...}{Additional arguments passed to the label layer
+(\code{\link[ggplot2:annotate]{ggplot2::annotate()}} with \code{geom = "label"}). Use to override
+defaults like \code{size}, \code{fontface}, or \code{fill}.}
 }
 \value{
 A list of ggplot2 layers (arrow + label) that can be added
@@ -84,6 +100,17 @@ ggplot(rates, aes(x = year, y = rate)) +
   geom_point() +
   annotate_change(rates, from = year == 2020, to = year == 2021,
                   value = rate, format = "points")
+
+# Custom colors (e.g., corporate palette)
+ggplot(revenue, aes(x = quarter, y = revenue)) +
+  geom_col(fill = "grey70", width = 0.6) +
+  annotate_change(
+    revenue,
+    from = quarter == "Q1",
+    to = quarter == "Q4",
+    value = revenue,
+    colors = c(up = "#1B9E77", down = "#D95F02", flat = "#7570B3")
+  )
 
 # Combined with annotate_callout() for a narrated chart
 ggplot(revenue, aes(x = quarter, y = revenue)) +
