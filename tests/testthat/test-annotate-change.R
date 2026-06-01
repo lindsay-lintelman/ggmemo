@@ -73,6 +73,25 @@ test_that("annotate_change errors when from matches zero rows", {
   )
 })
 
+test_that("annotate_change errors on character x-axis with helpful message", {
+  char_data <- data.frame(
+    quarter = c("Q1", "Q2"),
+    revenue = c(100, 150)
+  )
+  expect_error(
+    annotate_change(char_data, from = quarter == "Q1", to = quarter == "Q2",
+                    value = revenue),
+    "character vector.*factor"
+  )
+})
+
+test_that("annotate_change errors with clear message when value is missing", {
+  expect_error(
+    annotate_change(revenue, from = quarter == "Q1", to = quarter == "Q4"),
+    "`value` is required"
+  )
+})
+
 
 # -- Visual snapshot: increase (green arrow, percent label) --------------------
 

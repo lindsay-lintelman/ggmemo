@@ -97,6 +97,14 @@ annotate_change <- function(data, from, to, value, format = "percent") {
   #   function has already evaluated the argument, you get the result
   #   instead of the expression.
 
+  if (missing(value)) {
+    stop(
+      "`value` is required. Specify which column holds the numeric values ",
+      "to compute the change on (e.g., `value = revenue`).",
+      call. = FALSE
+    )
+  }
+
   from_quo  <- rlang::enquo(from)
   to_quo    <- rlang::enquo(to)
   value_quo <- rlang::enquo(value)
@@ -224,6 +232,16 @@ annotate_change <- function(data, from, to, value, format = "percent") {
 
   from_x <- from_row[[x_col]]
   to_x   <- to_row[[x_col]]
+
+  if (is.character(from_x)) {
+    stop(
+      "Column `", x_col, "` is a character vector, but annotate_change() ",
+      "needs a numeric, factor, or Date x-axis to compute the midpoint.\n",
+      "Tip: convert it to a factor with ",
+      "`data$", x_col, " <- factor(data$", x_col, ")`.",
+      call. = FALSE
+    )
+  }
 
   # as.numeric() handles both factor → integer position and Date → days.
   # For Date x-axes, we convert back to Date so ggplot2 doesn't warn
