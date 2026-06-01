@@ -98,3 +98,13 @@ p +
 \seealso{
 \code{\link[=annotate_change]{annotate_change()}} to label the delta between two data points.
 }
+\concept{annotate ggplot}
+\concept{annotation}
+\concept{annotation arrow}
+\concept{arrow}
+\concept{callout}
+\concept{callout label}
+\concept{ggplot annotation}
+\concept{highlight data point}
+\concept{label}
+\concept{label arrow}

@@ -154,3 +154,14 @@ ggplot(economics, aes(x = date, y = psavert)) +
 \seealso{
 \code{\link[=annotate_callout]{annotate_callout()}} to label a single data point.
 }
+\concept{annotate ggplot}
+\concept{annotation}
+\concept{annotation arrow}
+\concept{arrow}
+\concept{before after}
+\concept{change annotation}
+\concept{compare data points}
+\concept{delta}
+\concept{ggplot annotation}
+\concept{label arrow}
+\concept{percent change}

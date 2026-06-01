@@ -88,3 +88,11 @@ Authors:
 }
 
 }
+\concept{annotation}
+\concept{arrow}
+\concept{business chart}
+\concept{callout}
+\concept{ggplot annotation}
+\concept{highlight}
+\concept{label}
+\concept{percent change}

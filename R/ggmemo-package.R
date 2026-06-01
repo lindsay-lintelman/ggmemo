@@ -59,6 +59,15 @@
 #' - Interactive annotations: use plotly or ggiraph.
 #' - Theming or styling: use ggthemes, hrbrthemes, or bbplot.
 #'
+#' @concept annotation
+#' @concept ggplot annotation
+#' @concept arrow
+#' @concept label
+#' @concept percent change
+#' @concept business chart
+#' @concept callout
+#' @concept highlight
+#'
 "_PACKAGE"
 
 ## usethis namespace: start

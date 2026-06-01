@@ -37,6 +37,18 @@
 #' @return A list of ggplot2 layers (arrow + label) that can be added
 #'   to a plot with `+`.
 #'
+#' @concept percent change
+#' @concept annotation
+#' @concept annotation arrow
+#' @concept arrow
+#' @concept delta
+#' @concept change annotation
+#' @concept ggplot annotation
+#' @concept annotate ggplot
+#' @concept compare data points
+#' @concept before after
+#' @concept label arrow
+#'
 #' @seealso [annotate_callout()] to label a single data point.
 #'
 #' @examples
