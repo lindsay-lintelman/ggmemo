@@ -91,19 +91,42 @@
 #'     colors = c(up = "#1B9E77", down = "#D95F02", flat = "#7570B3")
 #'   )
 #'
-#' # Combined with annotate_callout() for a narrated chart
+#' # Date x-axis (time series) — use nudge on the callout for wide data
+#' ggplot(economics, aes(x = date, y = psavert)) +
+#'   geom_line() +
+#'   annotate_change(
+#'     economics,
+#'     from = date == as.Date("2005-07-01"),
+#'     to = date == as.Date("2012-12-01"),
+#'     value = psavert,
+#'     format = "points"
+#'   )
+#'
+#' # Showing a decline (red arrow, negative label)
 #' ggplot(revenue, aes(x = quarter, y = revenue)) +
 #'   geom_col(fill = "grey70", width = 0.6) +
-#'   annotate_callout(
-#'     revenue,
-#'     where = quarter == "Q4",
-#'     label = "Record quarter"
-#'   ) +
 #'   annotate_change(
 #'     revenue,
-#'     from = quarter == "Q1",
-#'     to = quarter == "Q4",
+#'     from = quarter == "Q2",
+#'     to = quarter == "Q3",
 #'     value = revenue
+#'   )
+#'
+#' # Combined with annotate_callout() on a time series
+#' ggplot(economics, aes(x = date, y = psavert)) +
+#'   geom_line() +
+#'   annotate_callout(
+#'     economics,
+#'     where = date == as.Date("2005-07-01"),
+#'     label = "All-time low",
+#'     nudge = c(365, 1)
+#'   ) +
+#'   annotate_change(
+#'     economics,
+#'     from = date == as.Date("2005-07-01"),
+#'     to = date == as.Date("2012-12-01"),
+#'     value = psavert,
+#'     format = "points"
 #'   )
 #'
 #' @export

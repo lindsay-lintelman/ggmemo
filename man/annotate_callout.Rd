@@ -69,6 +69,31 @@ p + annotate_callout(
   nudge = c(365, 500)
 )
 
+# Customize label appearance via ... (larger text, yellow background)
+p + annotate_callout(
+  economics,
+  where = date == as.Date("2009-10-01"),
+  label = "Peak unemployment",
+  nudge = c(365, 500),
+  size = 5, fill = "lightyellow"
+)
+
+# Mark both the peak and the trough on the same chart
+p +
+  annotate_callout(
+    economics,
+    where = date == as.Date("2009-10-01"),
+    label = "Peak",
+    nudge = c(365, 500)
+  ) +
+  annotate_callout(
+    economics,
+    where = date == as.Date("2000-01-01"),
+    label = "Dot-com low",
+    position = "bottom-right",
+    nudge = c(365, 500)
+  )
+
 }
 \seealso{
 \code{\link[=annotate_change]{annotate_change()}} to label the delta between two data points.
