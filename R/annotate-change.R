@@ -145,11 +145,23 @@ annotate_change <- function(data, from, to, value, format = "percent",
   to_x   <- to_row[[x_col]]
 
   if (is.character(from_x)) {
+    # Detect date-like strings (e.g., "2024-01-15" from read.csv)
+    looks_like_date <- grepl("^\\d{4}-\\d{2}-\\d{2}", from_x)
+    if (looks_like_date) {
+      tip <- paste0(
+        "Tip: this looks like a date. Convert with ",
+        "`data$", x_col, " <- as.Date(data$", x_col, ")`."
+      )
+    } else {
+      tip <- paste0(
+        "Tip: convert with `data$", x_col, " <- factor(data$", x_col,
+        ", levels = unique(data$", x_col, "))` to preserve data order."
+      )
+    }
     stop(
       "Column `", x_col, "` is a character vector, but annotate_change() ",
       "needs a numeric, factor, or Date x-axis to compute the midpoint.\n",
-      "Tip: convert it to a factor with ",
-      "`data$", x_col, " <- factor(data$", x_col, ")`.",
+      tip,
       call. = FALSE
     )
   }

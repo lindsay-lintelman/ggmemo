@@ -48,7 +48,19 @@ test_that("annotate_change errors on character x-axis with helpful message", {
   expect_error(
     annotate_change(char_data, from = quarter == "Q1", to = quarter == "Q2",
                     value = revenue),
-    "character vector.*factor"
+    "character vector.*preserve data order"
+  )
+})
+
+test_that("annotate_change suggests as.Date for date-like character columns", {
+  date_data <- data.frame(
+    date = c("2024-01-15", "2024-03-15"),
+    revenue = c(100, 200)
+  )
+  expect_error(
+    annotate_change(date_data, from = date == "2024-01-15",
+                    to = date == "2024-03-15", value = revenue),
+    "looks like a date.*as\\.Date"
   )
 })
 
