@@ -49,6 +49,7 @@ library(ggplot2)
 p <- ggplot(economics, aes(x = date, y = unemploy)) +
   geom_line()
 
+# Basic callout
 p + annotate_callout(
   economics,
   where = date == as.Date("2009-10-01"),
@@ -56,4 +57,15 @@ p + annotate_callout(
   position = "top-right"
 )
 
+# With explicit nudge (useful when data has many numeric columns)
+p + annotate_callout(
+  economics,
+  where = date == as.Date("2009-10-01"),
+  label = "Peak unemployment",
+  nudge = c(365, 500)
+)
+
+}
+\seealso{
+\code{\link[=annotate_change]{annotate_change()}} to label the delta between two data points.
 }

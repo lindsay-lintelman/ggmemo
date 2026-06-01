@@ -71,17 +71,28 @@
 #'
 #' @return A ggplot2 layer that can be added to a plot with `+`.
 #'
+#' @seealso [annotate_change()] to label the delta between two data points.
+#'
 #' @examples
 #' library(ggplot2)
 #'
 #' p <- ggplot(economics, aes(x = date, y = unemploy)) +
 #'   geom_line()
 #'
+#' # Basic callout
 #' p + annotate_callout(
 #'   economics,
 #'   where = date == as.Date("2009-10-01"),
 #'   label = "Peak unemployment",
 #'   position = "top-right"
+#' )
+#'
+#' # With explicit nudge (useful when data has many numeric columns)
+#' p + annotate_callout(
+#'   economics,
+#'   where = date == as.Date("2009-10-01"),
+#'   label = "Peak unemployment",
+#'   nudge = c(365, 500)
 #' )
 #'
 #' @export

@@ -30,7 +30,26 @@
 #
 # =============================================================================
 
-#' @keywords internal
+#' @description
+#' ggmemo provides two annotation functions for ggplot2 business charts:
+#'
+#' - [annotate_callout()]: Point at a specific data row with an arrow and
+#'   label (e.g., "Peak unemployment" or "All-time low: 2.2%").
+#' - [annotate_change()]: Draw a color-coded arrow between two data rows
+#'   and label the delta as percent change, absolute change, or percentage
+#'   points (e.g., "+31.7%", "+26", "+9.8 %pts").
+#'
+#' Both functions use tidy evaluation for row selection, auto-compute
+#' coordinates from the data, and return standard ggplot2 layers that
+#' you add with `+`.
+#'
+#' @section When to use ggmemo:
+#' Use ggmemo when you want to annotate a ggplot2 chart with arrows,
+#' callout labels, or change annotations without manually computing
+#' coordinates, formatting deltas, or positioning text. Common
+#' scenarios: quarterly reports, executive dashboards, time-series
+#' narration, before/after comparisons.
+#'
 "_PACKAGE"
 
 ## usethis namespace: start

@@ -1,15 +1,16 @@
 Package: ggmemo
-Title: Semantic Annotation Helpers for Business Charts in ggplot2
+Title: Add Arrows, Labels, and Change Annotations to ggplot2 Charts
 Version: 0.0.0.9000
 Authors@R:
     person("Lindsay", "Lintelman", , "lindsay.lintelman@posit.co",
            role = c("aut", "cre"))
-Description: Provides opinionated, high-level annotation functions for
-    ggplot2 charts commonly used in business reporting. Instead of
-    manually computing deltas or positioning arrows, users call semantic
-    verbs like annotate_callout() and annotate_change() that handle
-    formatting, placement, and styling automatically. Built on top of
-    the ggpp package for precise annotation positioning.
+Description: Add callout arrows, highlight data points, and show percent
+    change between rows on ggplot2 charts in one line of code.
+    annotate_callout() points at a data row with an arrow and label.
+    annotate_change() draws a color-coded arrow between two rows and
+    labels the delta as percent change, absolute difference, or
+    percentage points. Designed for business charts, quarterly reports,
+    and dashboards. Built on top of the ggpp package.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

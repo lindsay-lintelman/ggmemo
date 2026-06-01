@@ -53,13 +53,54 @@ revenue <- data.frame(
   revenue = c(120, 145, 132, 158)
 )
 
+# Percent change (default)
 ggplot(revenue, aes(x = quarter, y = revenue)) +
   geom_col(fill = "grey70", width = 0.6) +
   annotate_change(
     revenue,
-    from = quarter == "Q2",
-    to = quarter == "Q3",
+    from = quarter == "Q1",
+    to = quarter == "Q4",
     value = revenue
   )
 
+# Absolute change
+ggplot(revenue, aes(x = quarter, y = revenue)) +
+  geom_col(fill = "grey70", width = 0.6) +
+  annotate_change(
+    revenue,
+    from = quarter == "Q1",
+    to = quarter == "Q4",
+    value = revenue,
+    format = "absolute"
+  )
+
+# Percentage points (for data already expressed as rates)
+rates <- data.frame(
+  year = 2020:2023,
+  rate = c(3.5, 8.1, 5.4, 3.7)
+)
+ggplot(rates, aes(x = year, y = rate)) +
+  geom_line() +
+  geom_point() +
+  annotate_change(rates, from = year == 2020, to = year == 2021,
+                  value = rate, format = "points")
+
+# Combined with annotate_callout() for a narrated chart
+ggplot(revenue, aes(x = quarter, y = revenue)) +
+  geom_col(fill = "grey70", width = 0.6) +
+  annotate_callout(
+    revenue,
+    where = quarter == "Q4",
+    label = "Record quarter"
+  ) +
+  annotate_change(
+    revenue,
+    from = quarter == "Q1",
+    to = quarter == "Q4",
+    value = revenue
+  )
+
+}
+\seealso{
+\code{\link[=annotate_callout]{annotate_callout()}} to label a single data point.
 }

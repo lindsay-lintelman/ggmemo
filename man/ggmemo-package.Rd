@@ -4,10 +4,30 @@
 \name{ggmemo-package}
 \alias{ggmemo}
 \alias{ggmemo-package}
-\title{ggmemo: Semantic Annotation Helpers for Business Charts in ggplot2}
+\title{ggmemo: Add Arrows, Labels, and Change Annotations to ggplot2 Charts}
 \description{
-Provides opinionated, high-level annotation functions for ggplot2 charts commonly used in business reporting. Instead of manually computing deltas or positioning arrows, users call semantic verbs like annotate_callout() and annotate_change() that handle formatting, placement, and styling automatically. Built on top of the ggpp package for precise annotation positioning.
+ggmemo provides two annotation functions for ggplot2 business charts:
+\itemize{
+\item \code{\link[=annotate_callout]{annotate_callout()}}: Point at a specific data row with an arrow and
+label (e.g., "Peak unemployment" or "All-time low: 2.2\%").
+\item \code{\link[=annotate_change]{annotate_change()}}: Draw a color-coded arrow between two data rows
+and label the delta as percent change, absolute change, or percentage
+points (e.g., "+31.7\%", "+26", "+9.8 \%pts").
 }
+
+Both functions use tidy evaluation for row selection, auto-compute
+coordinates from the data, and return standard ggplot2 layers that
+you add with \code{+}.
+}
+\section{When to use ggmemo}{
+
+Use ggmemo when you want to annotate a ggplot2 chart with arrows,
+callout labels, or change annotations without manually computing
+coordinates, formatting deltas, or positioning text. Common
+scenarios: quarterly reports, executive dashboards, time-series
+narration, before/after comparisons.
+}
+
 \author{
 \strong{Maintainer}: Lindsay Lintelman \email{lindsay.lintelman@posit.co}
 
@@ -17,4 +37,3 @@ Authors:
 }
 
 }
-\keyword{internal}
