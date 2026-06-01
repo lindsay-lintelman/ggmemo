@@ -124,6 +124,26 @@
 #'     value = revenue
 #'   )
 #'
+#' # Multiple change annotations (quarter-over-quarter)
+#' ggplot(revenue, aes(x = quarter, y = revenue)) +
+#'   geom_col(fill = "grey70", width = 0.6) +
+#'   annotate_change(revenue, from = quarter == "Q1",
+#'                   to = quarter == "Q2", value = revenue) +
+#'   annotate_change(revenue, from = quarter == "Q2",
+#'                   to = quarter == "Q3", value = revenue) +
+#'   annotate_change(revenue, from = quarter == "Q3",
+#'                   to = quarter == "Q4", value = revenue)
+#'
+#' # Year-over-year growth on a line chart
+#' annual <- data.frame(year = 2019:2024,
+#'                      revenue = c(80, 65, 72, 95, 110, 128))
+#' ggplot(annual, aes(x = year, y = revenue)) +
+#'   geom_line() + geom_point() +
+#'   annotate_change(annual, from = year == 2019,
+#'                   to = year == 2024, value = revenue) +
+#'   annotate_callout(annual, where = year == 2020,
+#'                    label = "COVID dip", position = "bottom-right")
+#'
 #' # Combined with annotate_callout() on a time series
 #' ggplot(economics, aes(x = date, y = psavert)) +
 #'   geom_line() +
