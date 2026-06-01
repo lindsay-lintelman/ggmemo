@@ -25,11 +25,12 @@ You can install the development version of ggmemo from
 pak::pak("lindsay-lintelman/ggmemo")
 ```
 
-## Example
+## Examples
 
-Here’s a U.S. unemployment time series with a callout pointing at the
-Great Recession peak — one line of ggmemo code instead of manual arrow
-and label coordinates:
+### Callout annotation
+
+Point at a specific data row with an arrow and label — one line of
+ggmemo code instead of manual arrow and label coordinates:
 
 ``` r
 library(ggplot2)
@@ -49,4 +50,32 @@ ggplot(economics, aes(x = date, y = unemploy)) +
   )
 ```
 
-<img src="man/figures/README-example-1.png" alt="" width="100%" />
+<img src="man/figures/README-callout-1.png" alt="" width="100%" />
+
+### Change annotation
+
+Show the delta between two data points with a color-coded arrow and
+auto-formatted label:
+
+``` r
+quarterly_revenue <- data.frame(
+  quarter = factor(c("Q1", "Q2", "Q3", "Q4"),
+                   levels = c("Q1", "Q2", "Q3", "Q4")),
+  revenue = c(120, 145, 132, 158)
+)
+
+ggplot(quarterly_revenue, aes(x = quarter, y = revenue)) +
+  geom_col(fill = "grey70", width = 0.6) +
+  annotate_change(
+    quarterly_revenue,
+    from = quarter == "Q1",
+    to = quarter == "Q4",
+    value = revenue
+  ) +
+  labs(
+    title = "Quarterly Revenue ($K)",
+    x = NULL, y = NULL
+  )
+```
+
+<img src="man/figures/README-change-1.png" alt="" width="100%" />

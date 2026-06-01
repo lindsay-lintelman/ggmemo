@@ -1,5 +1,6 @@
 # ggmemo (development version)
 
+* Added `annotate_change()` for visualizing the change between two data points with auto-computed deltas, formatted labels, and color-coded arrows.
 * Added `annotate_callout()` for pointing at a data row with an arrow and label.
 * Package skeleton and infrastructure set up.
 
