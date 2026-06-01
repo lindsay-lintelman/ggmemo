@@ -206,8 +206,20 @@ annotate_change <- function(data, from, to, value, format = "percent") {
   if (any(date_cols)) {
     x_col <- names(which(date_cols))[1]
   } else {
+    # No Date column — prefer numeric/factor columns over character, since
+    # character columns (like city names) are almost never the x-axis in a
+    # chart that also has a numeric value column.
     other_cols <- setdiff(names(data), value_name)
-    x_col <- other_cols[1]
+    num_or_factor <- vapply(
+      data[other_cols],
+      function(col) is.numeric(col) || is.factor(col),
+      logical(1)
+    )
+    if (any(num_or_factor)) {
+      x_col <- other_cols[which(num_or_factor)[1]]
+    } else {
+      x_col <- other_cols[1]
+    }
   }
 
   from_x <- from_row[[x_col]]
