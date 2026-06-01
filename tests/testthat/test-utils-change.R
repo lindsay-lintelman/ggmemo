@@ -89,6 +89,24 @@ test_that("compute_delta formats negative absolute", {
 })
 
 
+# -- compute_delta: points format ----------------------------------------------
+
+test_that("compute_delta 'points' format shows difference with %pts suffix", {
+  result <- compute_delta(2.2, 12.0, "points")
+  expect_equal(result$label, "+9.8 %pts")
+})
+
+test_that("compute_delta 'points' format handles decrease", {
+  result <- compute_delta(12.0, 2.2, "points")
+  expect_equal(result$label, "-9.8 %pts")
+})
+
+test_that("compute_delta 'points' format handles zero change", {
+  result <- compute_delta(5.0, 5.0, "points")
+  expect_equal(result$label, "0.0 %pts")
+})
+
+
 # -- compute_delta: both format ------------------------------------------------
 
 test_that("compute_delta 'both' format shows percent and absolute", {

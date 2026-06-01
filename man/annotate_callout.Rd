@@ -4,7 +4,7 @@
 \alias{annotate_callout}
 \title{Add a callout annotation to a ggplot}
 \usage{
-annotate_callout(data, where, label, position = "top-right")
+annotate_callout(data, where, label, position = "top-right", nudge = NULL)
 }
 \arguments{
 \item{data}{A data frame. Should be the same data frame used in the
@@ -21,6 +21,14 @@ thrown if the expression matches zero or more than one row.}
 \item{position}{Where to place the label relative to the data point.
 One of \code{"top-right"} (default), \code{"top-left"}, \code{"bottom-right"}, or
 \code{"bottom-left"}.}
+
+\item{nudge}{Optional numeric vector of length 2 (\code{c(x, y)}) giving
+explicit nudge amounts in data units. Overrides the automatic nudge
+heuristic, which estimates 5\% of the x and y data ranges. The
+heuristic works well when \code{data} contains only the plotted columns;
+if \code{data} has many numeric columns (like \link[ggplot2:economics]{ggplot2::economics}),
+passing a two-column subset or setting \code{nudge} explicitly avoids
+the heuristic picking the wrong column's range.}
 }
 \value{
 A ggplot2 layer that can be added to a plot with \code{+}.

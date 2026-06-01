@@ -25,10 +25,14 @@ column name indicating which numeric column to compute the change
 on. For example, \code{value = revenue}.}
 
 \item{format}{How to format the delta label. One of \code{"percent"}
-(default), \code{"absolute"}, or \code{"both"}. Percent change from a zero
-base value falls back to absolute with a warning. Percent change
-from negative values uses the raw formula and may be confusing;
-use \code{"absolute"} for data that can go negative.}
+(default), \code{"absolute"}, \code{"points"}, or \code{"both"}. Percent change
+from a zero base value falls back to absolute with a warning.
+Percent change from negative values uses the raw formula and may
+be confusing; use \code{"absolute"} for data that can go negative.
+Use \code{"points"} when the data is already a rate or percentage
+(e.g., savings rate, market share) — it labels the difference
+in percentage points (e.g., "+9.8 \%pts") instead of computing
+a misleading percent-of-percent.}
 }
 \value{
 A list of ggplot2 layers (arrow + label) that can be added

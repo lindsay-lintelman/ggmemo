@@ -55,10 +55,14 @@
 #'   column name indicating which numeric column to compute the change
 #'   on. For example, `value = revenue`.
 #' @param format How to format the delta label. One of `"percent"`
-#'   (default), `"absolute"`, or `"both"`. Percent change from a zero
-#'   base value falls back to absolute with a warning. Percent change
-#'   from negative values uses the raw formula and may be confusing;
-#'   use `"absolute"` for data that can go negative.
+#'   (default), `"absolute"`, `"points"`, or `"both"`. Percent change
+#'   from a zero base value falls back to absolute with a warning.
+#'   Percent change from negative values uses the raw formula and may
+#'   be confusing; use `"absolute"` for data that can go negative.
+#'   Use `"points"` when the data is already a rate or percentage
+#'   (e.g., savings rate, market share) — it labels the difference
+#'   in percentage points (e.g., "+9.8 %pts") instead of computing
+#'   a misleading percent-of-percent.
 #'
 #' @return A list of ggplot2 layers (arrow + label) that can be added
 #'   to a plot with `+`.
@@ -209,8 +213,17 @@ annotate_change <- function(data, from, to, value, format = "percent") {
   from_x <- from_row[[x_col]]
   to_x   <- to_row[[x_col]]
 
-  # as.numeric() handles both factor → integer position and Date → days
-  mid_x <- (as.numeric(from_x) + as.numeric(to_x)) / 2
+  # as.numeric() handles both factor → integer position and Date → days.
+  # For Date x-axes, we convert back to Date so ggplot2 doesn't warn
+  # about passing a numeric to a Date scale.
+  mid_x_num <- (as.numeric(from_x) + as.numeric(to_x)) / 2
+  if (inherits(from_x, "Date")) {
+    mid_x <- as.Date(mid_x_num, origin = "1970-01-01")
+  } else if (inherits(from_x, "POSIXct")) {
+    mid_x <- as.POSIXct(mid_x_num, origin = "1970-01-01")
+  } else {
+    mid_x <- mid_x_num
+  }
 
   # Slight y-offset so the label doesn't sit directly on the arrow line
   y_range <- diff(range(data[[value_name]], na.rm = TRUE))

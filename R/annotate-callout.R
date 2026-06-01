@@ -57,6 +57,13 @@
 #' @param position Where to place the label relative to the data point.
 #'   One of `"top-right"` (default), `"top-left"`, `"bottom-right"`, or
 #'   `"bottom-left"`.
+#' @param nudge Optional numeric vector of length 2 (`c(x, y)`) giving
+#'   explicit nudge amounts in data units. Overrides the automatic nudge
+#'   heuristic, which estimates 5% of the x and y data ranges. The
+#'   heuristic works well when `data` contains only the plotted columns;
+#'   if `data` has many numeric columns (like [ggplot2::economics]),
+#'   passing a two-column subset or setting `nudge` explicitly avoids
+#'   the heuristic picking the wrong column's range.
 #'
 #' @return A ggplot2 layer that can be added to a plot with `+`.
 #'
@@ -74,7 +81,8 @@
 #' )
 #'
 #' @export
-annotate_callout <- function(data, where, label, position = "top-right") {
+annotate_callout <- function(data, where, label, position = "top-right",
+                             nudge = NULL) {
 
   # -- INPUT VALIDATION --------------------------------------------------------
   #
@@ -151,18 +159,25 @@ annotate_callout <- function(data, where, label, position = "top-right") {
   #   a dollar axis, etc.), so a fixed nudge like "500" would be way too
   #   big for some charts and invisible on others.
   #
-  #   We don't know which columns the user mapped to x and y (that info
-  #   lives in the ggplot's aes(), which we don't have). So we use a
-  #   heuristic: Date columns are usually the x-axis in business charts,
-  #   and the first numeric column is usually y. We compute 5% of each
-  #   column's range as the nudge — enough to visually separate the label
-  #   from the data point without pushing it off the chart.
+  #   If the user passed an explicit nudge = c(x, y), we use that directly.
+  #   Otherwise we fall back to the heuristic: Date columns are usually the
+  #   x-axis in business charts, and the first numeric column is usually y.
+  #   We compute 5% of each column's range as the nudge.
   #
-  #   This works well for time-series business charts (our target audience).
-  #   For scatter plots with unusual scales, the label might land slightly
-  #   too close or too far — still functional, just not pixel-perfect.
+  #   The heuristic works well when data has just an x and y column. For
+  #   wide data frames with many numeric columns (like ggplot2::economics),
+  #   the heuristic may pick the wrong column's range — that's when the
+  #   explicit nudge argument saves you.
 
-  nudges <- estimate_nudge(data)
+  if (!is.null(nudge)) {
+    if (!is.numeric(nudge) || length(nudge) != 2L) {
+      stop("`nudge` must be a numeric vector of length 2: c(x, y).",
+           call. = FALSE)
+    }
+    nudges <- c(x = nudge[1], y = nudge[2])
+  } else {
+    nudges <- estimate_nudge(data)
+  }
 
   # Map the position string ("top-right", etc.) to sign multipliers.
   # "top" means positive y nudge (label above the point).

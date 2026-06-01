@@ -93,6 +93,7 @@ compute_delta <- function(from_value, to_value, format) {
   label <- switch(format,
     "percent"  = format_percent(from_value, diff_value, direction),
     "absolute" = format_absolute(diff_value, direction),
+    "points"   = format_points(diff_value, direction),
     "both"     = paste0(
       format_percent(from_value, diff_value, direction),
       "\n(",
@@ -138,6 +139,16 @@ format_absolute <- function(diff_value, direction) {
     "flat" = ""
   )
   paste0(sign_prefix, format_number(diff_value, 0))
+}
+
+
+format_points <- function(diff_value, direction) {
+  sign_prefix <- switch(direction,
+    "up"   = "+",
+    "down" = "",
+    "flat" = ""
+  )
+  paste0(sign_prefix, format_number(diff_value, 1), " %pts")
 }
 
 
@@ -193,7 +204,7 @@ validate_change_inputs <- function(data, value_quo, format) {
   }
 
   # -- Check format is one of the three allowed values --
-  valid_formats <- c("percent", "absolute", "both")
+  valid_formats <- c("percent", "absolute", "points", "both")
   if (!format %in% valid_formats) {
     stop(
       "`format` must be one of: ",
