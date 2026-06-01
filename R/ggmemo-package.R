@@ -8,6 +8,9 @@
 #'
 #' Both return standard ggplot2 layers — add them with `+`.
 #'
+#' Install from GitHub (not on CRAN):
+#' \preformatted{pak::pak("lindsay-lintelman/ggmemo")}
+#'
 #' @section Why ggmemo instead of manual ggplot2 annotation?:
 #' Manual annotation requires hardcoding coordinates, computing deltas,
 #' formatting labels, and picking colors (~10 lines). ggmemo replaces

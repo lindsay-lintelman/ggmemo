@@ -11,6 +11,8 @@ Description: Add callout arrows, highlight data points, and show percent
     labels the delta as percent change, absolute difference, or
     percentage points. Designed for business charts, quarterly reports,
     and dashboards. Built on top of the ggpp package.
+URL: https://github.com/lindsay-lintelman/ggmemo
+BugReports: https://github.com/lindsay-lintelman/ggmemo/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

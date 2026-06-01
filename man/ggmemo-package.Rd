@@ -15,6 +15,9 @@ change, absolute change, or percentage points.
 }
 
 Both return standard ggplot2 layers — add them with \code{+}.
+
+Install from GitHub (not on CRAN):
+\preformatted{pak::pak("lindsay-lintelman/ggmemo")}
 }
 \section{Why ggmemo instead of manual ggplot2 annotation?}{
 
@@ -108,6 +111,14 @@ ggplot(revenue, aes(x = quarter, y = revenue)) +
   ) +
   labs(title = "2024 Quarterly Revenue ($K)", x = NULL, y = NULL) +
   theme_minimal()
+
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/lindsay-lintelman/ggmemo}
+  \item Report bugs at \url{https://github.com/lindsay-lintelman/ggmemo/issues}
+}
 
 }
 \author{
