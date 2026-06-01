@@ -37,6 +37,35 @@ arrow positioning.
 pak::pak("lindsay-lintelman/ggmemo")
 ```
 
+## Why ggmemo?
+
+Adding a change annotation to a ggplot2 chart normally means computing
+the delta, formatting the label, choosing colors, and hardcoding
+coordinates:
+
+```r
+# Without ggmemo: ~10 lines of manual work
+from_val <- 120; to_val <- 158
+pct <- paste0("+", round((to_val - from_val) / from_val * 100, 1), "%")
+ggplot(revenue, aes(x = quarter, y = revenue)) +
+  geom_col(fill = "grey70", width = 0.6) +
+  annotate("segment", x = "Q1", xend = "Q4", y = 120, yend = 158,
+           arrow = arrow(length = unit(0.15, "inches")),
+           colour = "#2E7D32", linewidth = 0.6) +
+  annotate("label", x = 2.5, y = 139, label = pct,
+           colour = "#2E7D32", fill = "white", fontface = "bold", size = 3.5)
+```
+
+With ggmemo, the same result is one function call:
+
+```r
+# With ggmemo: 1 line
+ggplot(revenue, aes(x = quarter, y = revenue)) +
+  geom_col(fill = "grey70", width = 0.6) +
+  annotate_change(revenue, from = quarter == "Q1",
+                  to = quarter == "Q4", value = revenue)
+```
+
 ## Examples
 
 ### Callout annotation

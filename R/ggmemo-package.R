@@ -8,6 +8,23 @@
 #'
 #' Both return standard ggplot2 layers — add them with `+`.
 #'
+#' @section Why ggmemo instead of manual ggplot2 annotation?:
+#' Manual annotation requires hardcoding coordinates, computing deltas,
+#' formatting labels, and picking colors (~10 lines). ggmemo replaces
+#' that with a single function call:
+#' \preformatted{
+#' # Without ggmemo:
+#' annotate("segment", x = "Q1", xend = "Q4", y = 120, yend = 158,
+#'          arrow = arrow(length = unit(0.15, "inches")),
+#'          colour = "#2E7D32", linewidth = 0.6) +
+#' annotate("label", x = 2.5, y = 139, label = "+31.7%",
+#'          colour = "#2E7D32", fill = "white", fontface = "bold")
+#'
+#' # With ggmemo:
+#' annotate_change(data, from = quarter == "Q1",
+#'                 to = quarter == "Q4", value = revenue)
+#' }
+#'
 #' @section Quick reference:
 #' \preformatted{
 #' # Label a data point
