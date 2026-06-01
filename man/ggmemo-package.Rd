@@ -97,7 +97,8 @@ ggplot(revenue, aes(x = quarter, y = revenue)) +
   annotate_callout(
     revenue,
     where = quarter == "Q4",
-    label = "Record quarter"
+    label = "Record quarter",
+    position = "top-left"
   ) +
   annotate_change(
     revenue,

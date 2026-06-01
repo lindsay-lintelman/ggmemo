@@ -188,8 +188,13 @@ filter_to_single_row <- function(data, quo, arg_name) {
 estimate_nudge <- function(data, fraction = 0.05) {
   date_cols <- vapply(data, inherits, logical(1), what = c("Date", "POSIXct"))
   num_cols <- vapply(data, is.numeric, logical(1))
+  factor_cols <- vapply(data, is.factor, logical(1))
 
-  if (any(date_cols)) {
+  # For factor x-axes, nudge by a fraction of the inter-level spacing (1 unit)
+  # rather than 5% of the total range, which is too small on short axes.
+  if (any(factor_cols)) {
+    x_range <- 1 / fraction * 0.4
+  } else if (any(date_cols)) {
     x_range <- as.numeric(diff(range(data[[which(date_cols)[1]]], na.rm = TRUE)))
   } else if (any(num_cols)) {
     x_range <- diff(range(data[[which(num_cols)[1]]], na.rm = TRUE))
@@ -197,7 +202,7 @@ estimate_nudge <- function(data, fraction = 0.05) {
     x_range <- 1
   }
 
-  non_date_num <- num_cols & !date_cols
+  non_date_num <- num_cols & !date_cols & !factor_cols
   if (any(non_date_num)) {
     y_range <- diff(range(data[[which(non_date_num)[1]]], na.rm = TRUE))
   } else if (any(num_cols)) {
