@@ -79,6 +79,36 @@ narration, before/after comparisons.
 }
 }
 
+\examples{
+library(ggplot2)
+library(ggmemo)
+
+# -- Complete template: narrated business chart --
+# Data
+revenue <- data.frame(
+  quarter = factor(c("Q1", "Q2", "Q3", "Q4"),
+                   levels = c("Q1", "Q2", "Q3", "Q4")),
+  revenue = c(120, 145, 132, 158)
+)
+
+# Annotated chart
+ggplot(revenue, aes(x = quarter, y = revenue)) +
+  geom_col(fill = "steelblue", width = 0.6) +
+  annotate_callout(
+    revenue,
+    where = quarter == "Q4",
+    label = "Record quarter"
+  ) +
+  annotate_change(
+    revenue,
+    from = quarter == "Q1",
+    to = quarter == "Q4",
+    value = revenue
+  ) +
+  labs(title = "2024 Quarterly Revenue ($K)", x = NULL, y = NULL) +
+  theme_minimal()
+
+}
 \author{
 \strong{Maintainer}: Lindsay Lintelman \email{lindsay.lintelman@posit.co}
 
@@ -88,11 +118,19 @@ Authors:
 }
 
 }
+\concept{KPI}
+\concept{annotate ggplot}
 \concept{annotation}
 \concept{arrow}
 \concept{business chart}
 \concept{callout}
+\concept{dashboard}
+\concept{data storytelling}
 \concept{ggplot annotation}
+\concept{growth rate}
 \concept{highlight}
 \concept{label}
+\concept{narrate chart}
 \concept{percent change}
+\concept{quarterly report}
+\concept{year over year}

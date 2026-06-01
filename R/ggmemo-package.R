@@ -59,14 +59,51 @@
 #' - Interactive annotations: use plotly or ggiraph.
 #' - Theming or styling: use ggthemes, hrbrthemes, or bbplot.
 #'
+#' @examples
+#' library(ggplot2)
+#' library(ggmemo)
+#'
+#' # -- Complete template: narrated business chart --
+#' # Data
+#' revenue <- data.frame(
+#'   quarter = factor(c("Q1", "Q2", "Q3", "Q4"),
+#'                    levels = c("Q1", "Q2", "Q3", "Q4")),
+#'   revenue = c(120, 145, 132, 158)
+#' )
+#'
+#' # Annotated chart
+#' ggplot(revenue, aes(x = quarter, y = revenue)) +
+#'   geom_col(fill = "steelblue", width = 0.6) +
+#'   annotate_callout(
+#'     revenue,
+#'     where = quarter == "Q4",
+#'     label = "Record quarter"
+#'   ) +
+#'   annotate_change(
+#'     revenue,
+#'     from = quarter == "Q1",
+#'     to = quarter == "Q4",
+#'     value = revenue
+#'   ) +
+#'   labs(title = "2024 Quarterly Revenue ($K)", x = NULL, y = NULL) +
+#'   theme_minimal()
+#'
 #' @concept annotation
 #' @concept ggplot annotation
+#' @concept annotate ggplot
 #' @concept arrow
 #' @concept label
 #' @concept percent change
 #' @concept business chart
 #' @concept callout
 #' @concept highlight
+#' @concept narrate chart
+#' @concept data storytelling
+#' @concept growth rate
+#' @concept year over year
+#' @concept KPI
+#' @concept dashboard
+#' @concept quarterly report
 #'
 "_PACKAGE"
 
