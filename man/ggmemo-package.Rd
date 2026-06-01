@@ -6,19 +6,41 @@
 \alias{ggmemo-package}
 \title{ggmemo: Add Arrows, Labels, and Change Annotations to ggplot2 Charts}
 \description{
-ggmemo provides two annotation functions for ggplot2 business charts:
+Add arrows, labels, and change annotations to ggplot2 charts in one
+line of code. Two functions:
 \itemize{
-\item \code{\link[=annotate_callout]{annotate_callout()}}: Point at a specific data row with an arrow and
-label (e.g., "Peak unemployment" or "All-time low: 2.2\%").
-\item \code{\link[=annotate_change]{annotate_change()}}: Draw a color-coded arrow between two data rows
-and label the delta as percent change, absolute change, or percentage
-points (e.g., "+31.7\%", "+26", "+9.8 \%pts").
+\item \code{\link[=annotate_callout]{annotate_callout()}}: Point at a data row with an arrow and label.
+\item \code{\link[=annotate_change]{annotate_change()}}: Show the delta between two rows as percent
+change, absolute change, or percentage points.
 }
 
-Both functions use tidy evaluation for row selection, auto-compute
-coordinates from the data, and return standard ggplot2 layers that
-you add with \code{+}.
+Both return standard ggplot2 layers — add them with \code{+}.
 }
+\section{Quick reference}{
+
+\preformatted{
+# Label a data point
+annotate_callout(data, where, label, position, nudge, ...)
+
+# Show change between two points
+annotate_change(data, from, to, value, format, colors, ...)
+
+format options: "percent" (default), "absolute", "points", "both"
+}
+}
+
+\section{Common tasks}{
+
+\tabular{ll}{
+Label a peak or milestone   \tab \code{annotate_callout(df, where = date == "2024-06-01", label = "Peak")} \cr
+Show percent change         \tab \code{annotate_change(df, from = ..., to = ..., value = sales)} \cr
+Show absolute difference    \tab \code{annotate_change(..., format = "absolute")} \cr
+Show percentage point change \tab \code{annotate_change(..., format = "points")} \cr
+Use custom colors           \tab \code{annotate_change(..., colors = c(up = "#1B9E77", down = "#D95F02", flat = "#999"))} \cr
+Override label styling      \tab \code{annotate_callout(..., size = 4, fill = "lightyellow")} \cr
+}
+}
+
 \section{When to use ggmemo}{
 
 Use ggmemo when you want to annotate a ggplot2 chart with arrows,
@@ -26,6 +48,16 @@ callout labels, or change annotations without manually computing
 coordinates, formatting deltas, or positioning text. Common
 scenarios: quarterly reports, executive dashboards, time-series
 narration, before/after comparisons.
+}
+
+\section{When NOT to use ggmemo}{
+
+\itemize{
+\item Repelling overlapping labels: use the ggrepel package.
+\item NPC (normalized parent coordinates) positioning: use the ggpp package.
+\item Interactive annotations: use plotly or ggiraph.
+\item Theming or styling: use ggthemes, hrbrthemes, or bbplot.
+}
 }
 
 \author{

@@ -7,18 +7,19 @@
 
 <!-- badges: end -->
 
-ggmemo provides semantic, opinionated annotation helpers for business
-charts built with ggplot2. Instead of manually computing deltas,
-formatting percentages, and fiddling with arrow coordinates, you call
-high-level verbs like `annotate_callout()` and `annotate_change()` that
-handle the details for you. Built on top of the
-[ggpp](https://docs.r4photobiology.info/ggpp/) package for precise
-annotation positioning.
+Need to label a data point or show percent change on a ggplot2 chart?
+ggmemo does it in one line — no manual coordinate math, no fiddly arrow
+positioning.
+
+| You want to… | Use |
+|----|----|
+| Point at a data point with an arrow and label | `annotate_callout(data, where = year == 2024, label = "Peak")` |
+| Show percent change between two rows | `annotate_change(data, from = ..., to = ..., value = sales)` |
+| Show absolute difference | `annotate_change(..., format = "absolute")` |
+| Show change in percentage points | `annotate_change(..., format = "points")` |
+| Use custom colors | `annotate_change(..., colors = c(up = "#1B9E77", down = "#D95F02", flat = "#999"))` |
 
 ## Installation
-
-You can install the development version of ggmemo from
-[GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("pak")
