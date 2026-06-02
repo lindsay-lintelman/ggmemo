@@ -1,0 +1,32 @@
+# GitHub issue form template for feature requests.
+# "required: false" fields can be left blank — useful for quick ideas
+# where the user hasn't thought through alternatives yet.
+
+name: Feature request
+description: Suggest a new feature or improvement
+labels: ["enhancement"]
+
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: What are you trying to do that ggmemo doesn't support yet?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Your proposal
+      description: How would you like it to work? A code sketch is helpful.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Have you tried other approaches or packages?
+    validations:
+      required: false

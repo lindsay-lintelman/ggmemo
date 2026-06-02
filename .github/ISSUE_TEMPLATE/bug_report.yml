@@ -1,0 +1,43 @@
+# GitHub issue form template for bug reports.
+# Uses the YAML form schema (not legacy Markdown).
+# Each field becomes a structured section in the issue body.
+# "validations: required: true" means the user can't submit without it.
+
+name: Bug report
+description: Something isn't working as expected
+labels: ["bug"]
+
+body:
+  - type: textarea
+    id: code
+    attributes:
+      label: What you tried
+      description: Paste the R code that triggered the bug.
+      render: r
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: What happened
+      description: Describe the error, warning, or incorrect output.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+      description: What should have happened instead?
+    validations:
+      required: true
+
+  - type: textarea
+    id: session
+    attributes:
+      label: Session info
+      description: "Paste the output of `sessionInfo()` or `sessioninfo::session_info()`."
+      render: r
+    validations:
+      required: false
