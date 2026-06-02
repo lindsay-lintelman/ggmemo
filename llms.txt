@@ -1,0 +1,158 @@
+# ggmemo
+
+Add arrows, labels, and change annotations to ggplot2 business charts in
+one line of code.
+
+![](reference/figures/README-hero-1.png)
+
+## Overview
+
+| You want to… | Use |
+|----|----|
+| Point at a data point with an arrow and label | `annotate_callout(data, where = year == 2024, label = "Peak")` |
+| Show percent change between two rows | `annotate_change(data, from = ..., to = ..., value = sales)` |
+| Show absolute difference | `annotate_change(..., format = "absolute")` |
+| Show change in percentage points | `annotate_change(..., format = "points")` |
+| Use custom colors | `annotate_change(..., colors = c(up = "#1B9E77", down = "#D95F02", flat = "#999"))` |
+
+Without ggmemo, annotating a ggplot2 chart means hardcoding coordinates,
+computing deltas, formatting labels, and choosing colors — roughly 10
+lines of manual work per annotation. ggmemo replaces that with a single
+function call.
+
+## Installation
+
+``` r
+
+# install.packages("pak")
+pak::pak("lindsay-lintelman/ggmemo")
+```
+
+## Examples
+
+### Callout annotation
+
+Point at a specific data row with an arrow and label:
+
+``` r
+
+library(ggplot2)
+library(ggmemo)
+
+ggplot(economics, aes(x = date, y = unemploy)) +
+  geom_line() +
+  annotate_callout(
+    economics,
+    where = date == as.Date("2009-10-01"),
+    label = "Peak unemployment",
+    position = "bottom-left"
+  ) +
+  labs(title = "U.S. Unemployment (thousands)", x = NULL, y = NULL)
+```
+
+![](reference/figures/README-callout-1.png)
+
+### Change annotation
+
+Show the delta between two data points with a color-coded arrow:
+
+``` r
+
+quarterly_revenue <- data.frame(
+  quarter = factor(c("Q1", "Q2", "Q3", "Q4"),
+                   levels = c("Q1", "Q2", "Q3", "Q4")),
+  revenue = c(120, 145, 132, 158)
+)
+
+ggplot(quarterly_revenue, aes(x = quarter, y = revenue)) +
+  geom_col(fill = "grey70", width = 0.6) +
+  annotate_change(
+    quarterly_revenue,
+    from = quarter == "Q1",
+    to = quarter == "Q4",
+    value = revenue
+  ) +
+  labs(title = "Quarterly Revenue ($K)", x = NULL, y = NULL)
+```
+
+![](reference/figures/README-change-1.png)
+
+### Time series with both annotations
+
+``` r
+
+ggplot(economics, aes(x = date, y = psavert)) +
+  geom_line(colour = "grey40") +
+  annotate_callout(
+    economics,
+    where = date == as.Date("2005-07-01"),
+    label = "All-time low",
+    nudge = c(365, 1)
+  ) +
+  annotate_change(
+    economics,
+    from = date == as.Date("2005-07-01"),
+    to = date == as.Date("2012-12-01"),
+    value = psavert,
+    format = "points"
+  ) +
+  labs(
+    title = "U.S. Personal Savings Rate",
+    x = NULL, y = "Savings rate (%)"
+  ) +
+  theme_minimal()
+```
+
+![](reference/figures/README-time-series-1.png)
+
+## Learning more
+
+- [`vignette("narrating-business-charts")`](https://lindsay-lintelman.github.io/ggmemo/articles/narrating-business-charts.md)
+  — full walkthrough with customization, multiple annotations, and
+  common mistakes.
+- [`?annotate_callout`](https://lindsay-lintelman.github.io/ggmemo/reference/annotate_callout.md)
+  and
+  [`?annotate_change`](https://lindsay-lintelman.github.io/ggmemo/reference/annotate_change.md)
+  — function reference with all arguments and examples.
+
+## Related packages
+
+ggmemo is focused on callout and change annotations for business charts.
+For other annotation needs:
+
+- [ggpp](https://docs.r4photobiology.info/ggpp/) — precise annotation
+  positioning with NPC coordinates. ggmemo is built on ggpp.
+- [ggrepel](https://ggrepel.slowkow.com/) — automatically reposition
+  text labels to avoid overlaps.
+- [ggannotate](https://github.com/MattCowgill/ggannotate) —
+  interactively annotate plots in RStudio.
+
+## Code of Conduct
+
+Please note that ggmemo is released with a [Contributor Code of
+Conduct](https://www.contributor-covenant.org/version/2/1/code_of_conduct/).
+By contributing, you agree to abide by its terms.
+
+# Package index
+
+## All functions
+
+- [`annotate_callout()`](https://lindsay-lintelman.github.io/ggmemo/reference/annotate_callout.md)
+  : Add a callout annotation to a ggplot
+- [`annotate_change()`](https://lindsay-lintelman.github.io/ggmemo/reference/annotate_change.md)
+  : Annotate the change between two data points on a ggplot
+- [`ggmemo`](https://lindsay-lintelman.github.io/ggmemo/reference/ggmemo-package.md)
+  [`ggmemo-package`](https://lindsay-lintelman.github.io/ggmemo/reference/ggmemo-package.md)
+  : ggmemo: Add Arrows, Labels, and Change Annotations to ggplot2 Charts
+
+# Articles
+
+### All vignettes
+
+- [Narrating Business Charts with
+  ggmemo](https://lindsay-lintelman.github.io/ggmemo/articles/narrating-business-charts.md):
+
+  Learn how to annotate ggplot2 charts with callout labels and change
+  annotations. Covers callouts, percent change, absolute change,
+  percentage points, multiple annotations, time series, customization,
+  and common mistakes.
