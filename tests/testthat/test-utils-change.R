@@ -1,20 +1,5 @@
 default_colors <- c(up = "#2E7D32", down = "#B22222", flat = "#808080")
 
-# -- pick_change_color ---------------------------------------------------------
-
-test_that("pick_change_color returns green for 'up'", {
-  expect_equal(pick_change_color("up"), "#2E7D32")
-})
-
-test_that("pick_change_color returns red for 'down'", {
-  expect_equal(pick_change_color("down"), "#B22222")
-})
-
-test_that("pick_change_color returns grey for 'flat'", {
-  expect_equal(pick_change_color("flat"), "#808080")
-})
-
-
 # -- compute_delta: direction --------------------------------------------------
 
 test_that("compute_delta detects 'up' direction", {

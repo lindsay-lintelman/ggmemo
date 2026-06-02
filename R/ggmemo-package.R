@@ -93,21 +93,10 @@
 #'   theme_minimal()
 #'
 #' @concept annotation
-#' @concept ggplot annotation
 #' @concept annotate ggplot
-#' @concept arrow
-#' @concept label
 #' @concept percent change
 #' @concept business chart
 #' @concept callout
-#' @concept highlight
-#' @concept narrate chart
-#' @concept data storytelling
-#' @concept growth rate
-#' @concept year over year
-#' @concept KPI
-#' @concept dashboard
-#' @concept quarterly report
 #'
 "_PACKAGE"
 

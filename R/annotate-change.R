@@ -30,24 +30,19 @@
 #' @param colors Named character vector of length 3 with hex color values
 #'   for the arrow and label. Names must be `"up"`, `"down"`, and `"flat"`.
 #'   Defaults to dark green, dark red, and grey.
-#' @param ... Additional arguments passed to the label layer
+#' @param ... Additional arguments passed to the **label** layer
 #'   ([ggplot2::annotate()] with `geom = "label"`). Use to override
-#'   defaults like `size`, `fontface`, or `fill`.
+#'   defaults like `size`, `fontface`, or `fill`. Note: these do not
+#'   affect the arrow segment. To change the arrow, use `colors`.
 #'
 #' @return A list of ggplot2 layers (arrow + label) that can be added
 #'   to a plot with `+`.
 #'
 #' @concept percent change
 #' @concept annotation
-#' @concept annotation arrow
-#' @concept arrow
-#' @concept delta
 #' @concept change annotation
-#' @concept ggplot annotation
 #' @concept annotate ggplot
 #' @concept compare data points
-#' @concept before after
-#' @concept label arrow
 #'
 #' @seealso [annotate_callout()] to label a single data point.
 #'

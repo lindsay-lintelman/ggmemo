@@ -46,9 +46,10 @@ a misleading percent-of-percent.}
 for the arrow and label. Names must be \code{"up"}, \code{"down"}, and \code{"flat"}.
 Defaults to dark green, dark red, and grey.}
 
-\item{...}{Additional arguments passed to the label layer
+\item{...}{Additional arguments passed to the \strong{label} layer
 (\code{\link[ggplot2:annotate]{ggplot2::annotate()}} with \code{geom = "label"}). Use to override
-defaults like \code{size}, \code{fontface}, or \code{fill}.}
+defaults like \code{size}, \code{fontface}, or \code{fill}. Note: these do not
+affect the arrow segment. To change the arrow, use \code{colors}.}
 }
 \value{
 A list of ggplot2 layers (arrow + label) that can be added
@@ -176,12 +177,6 @@ ggplot(economics, aes(x = date, y = psavert)) +
 }
 \concept{annotate ggplot}
 \concept{annotation}
-\concept{annotation arrow}
-\concept{arrow}
-\concept{before after}
 \concept{change annotation}
 \concept{compare data points}
-\concept{delta}
-\concept{ggplot annotation}
-\concept{label arrow}
 \concept{percent change}

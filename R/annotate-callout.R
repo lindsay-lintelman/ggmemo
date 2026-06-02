@@ -34,14 +34,9 @@
 #' @return A ggplot2 layer that can be added to a plot with `+`.
 #'
 #' @concept annotation
-#' @concept arrow
-#' @concept label
 #' @concept callout
-#' @concept callout label
 #' @concept annotation arrow
 #' @concept highlight data point
-#' @concept label arrow
-#' @concept ggplot annotation
 #' @concept annotate ggplot
 #'
 #' @seealso [annotate_change()] to label the delta between two data points.

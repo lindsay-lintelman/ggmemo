@@ -1,11 +1,3 @@
-# Default colors — used as fallback reference in documentation.
-# The actual defaults live in the annotate_change() signature so users
-# can see them in ?annotate_change.
-COLOR_INCREASE <- "#2E7D32"
-COLOR_DECREASE <- "#B22222"
-COLOR_FLAT     <- "#808080"
-
-
 #' Compute the delta between two values
 #'
 #' @param from_value A single numeric value (the starting point).
@@ -81,27 +73,7 @@ format_points <- function(diff_value, direction) {
 
 
 format_number <- function(x, digits) {
-  formatted <- formatC(
-    round(x, digits),
-    format = "f",
-    digits = digits,
-    big.mark = ","
-  )
-  trimws(formatted)
-}
-
-
-#' Pick a color based on the direction of change
-#'
-#' @param direction One of "up", "down", or "flat".
-#' @return A color hex string.
-#' @noRd
-pick_change_color <- function(direction) {
-  switch(direction,
-    "up"   = COLOR_INCREASE,
-    "down" = COLOR_DECREASE,
-    "flat" = COLOR_FLAT
-  )
+  trimws(formatC(x, format = "f", digits = digits, big.mark = ","))
 }
 
 

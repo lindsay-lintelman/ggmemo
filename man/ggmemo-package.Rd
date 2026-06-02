@@ -116,6 +116,7 @@ ggplot(revenue, aes(x = quarter, y = revenue)) +
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://lindsay-lintelman.github.io/ggmemo/}
   \item \url{https://github.com/lindsay-lintelman/ggmemo}
   \item Report bugs at \url{https://github.com/lindsay-lintelman/ggmemo/issues}
 }
@@ -130,19 +131,8 @@ Authors:
 }
 
 }
-\concept{KPI}
 \concept{annotate ggplot}
 \concept{annotation}
-\concept{arrow}
 \concept{business chart}
 \concept{callout}
-\concept{dashboard}
-\concept{data storytelling}
-\concept{ggplot annotation}
-\concept{growth rate}
-\concept{highlight}
-\concept{label}
-\concept{narrate chart}
 \concept{percent change}
-\concept{quarterly report}
-\concept{year over year}
