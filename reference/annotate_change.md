@@ -66,10 +66,11 @@ annotate_change(
 
 - ...:
 
-  Additional arguments passed to the label layer
+  Additional arguments passed to the **label** layer
   ([`ggplot2::annotate()`](https://ggplot2.tidyverse.org/reference/annotate.html)
   with `geom = "label"`). Use to override defaults like `size`,
-  `fontface`, or `fill`.
+  `fontface`, or `fill`. Note: these do not affect the arrow segment. To
+  change the arrow, use `colors`.
 
 ## Value
 
