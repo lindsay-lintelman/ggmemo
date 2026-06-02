@@ -1,17 +1,32 @@
-# ggmemo (development version)
+# ggmemo 0.1.0
 
-* Added `annotate_change()` for visualizing the change between two data points with auto-computed deltas, formatted labels, and color-coded arrows.
-* Added `annotate_callout()` for pointing at a data row with an arrow and label.
-* Package skeleton and infrastructure set up.
+Initial release. ggmemo adds two functions for annotating ggplot2
+business charts without manual coordinate math.
 
-<!--
-NEWS.md conventions:
-- One heading per release: # ggmemo 0.1.0
-- Use "# ggmemo (development version)" for unreleased changes.
-- List user-visible changes only — internal refactors don't belong here.
-- Use bullet points, grouped by: ## New features, ## Bug fixes, ## Breaking changes.
-- Breaking changes should be called out prominently so users know what to update.
-- When you release, rename "(development version)" to the version number and
-  add a new "(development version)" section above it for ongoing work.
-- See https://r-pkgs.org/lifecycle.html#sec-lifecycle-news for full guidance.
--->
+## New features
+
+* `annotate_callout()` points at a specific data row with an arrow
+  and label. Supports four label positions, automatic or explicit
+  nudge, and `...` pass-through for styling.
+
+* `annotate_change()` draws a color-coded arrow between two data
+  rows and labels the midpoint with the computed delta. Supports
+  four format options: `"percent"` (default), `"absolute"`,
+  `"points"` (percentage points), and `"both"`. Custom colors via
+  the `colors` argument; label styling via `...`.
+
+* Both functions use tidy evaluation for row selection (`where`,
+  `from`, `to`) — the same syntax as `dplyr::filter()`.
+
+## Known limitations
+
+* The automatic nudge heuristic in `annotate_callout()` guesses
+  which columns are x and y from the data frame structure. On wide
+  data frames with many numeric columns, use the `nudge` argument
+  or pass a two-column subset of the data.
+
+* `annotate_change()` similarly guesses the x-axis column. The
+  heuristic prefers Date > numeric/factor > character, but can pick
+  wrong on wide data.
+
+Both limitations are tracked for v0.2 (#1, #2).
