@@ -256,27 +256,3 @@ annotate_change <- function(data, from, to, value, format = "percent",
 
   list(segment_layer, label_layer)
 }
-
-
-# -- Internal helpers ----------------------------------------------------------
-
-#' Detect which column is likely the x-axis
-#' @noRd
-detect_x_column <- function(data, value_name) {
-  date_cols <- vapply(data, inherits, logical(1), what = c("Date", "POSIXct"))
-  if (any(date_cols)) {
-    return(names(which(date_cols))[1])
-  }
-
-  other_cols <- setdiff(names(data), value_name)
-  num_or_factor <- vapply(
-    data[other_cols],
-    function(col) is.numeric(col) || is.factor(col),
-    logical(1)
-  )
-  if (any(num_or_factor)) {
-    return(other_cols[which(num_or_factor)[1]])
-  }
-
-  other_cols[1]
-}
