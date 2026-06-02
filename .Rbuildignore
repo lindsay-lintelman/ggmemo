@@ -8,3 +8,5 @@
 ^scratch$
 ^doc$
 ^Meta$
+^CLAUDE\.md$
+^Rplots\.pdf$
