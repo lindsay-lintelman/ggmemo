@@ -1,0 +1,333 @@
+---
+title: "Narrating Business Charts with ggmemo"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Narrating Business Charts with ggmemo}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7,
+  fig.height = 4.5,
+  dpi = 150
+)
+```
+
+<!-- DRAFT — rewrite in your voice -->
+
+A ggplot2 chart shows data. An *annotated* chart tells a story. ggmemo
+adds the storytelling layer: arrows that point at key moments, labels
+that name them, and change annotations that quantify what happened.
+
+This vignette walks through a realistic example — quarterly revenue
+data — from a bare chart to a narrated one, introducing each ggmemo
+function along the way.
+
+## The data
+
+```{r setup}
+library(ggplot2)
+library(ggmemo)
+
+revenue <- data.frame(
+  quarter = factor(c("Q1", "Q2", "Q3", "Q4"),
+                   levels = c("Q1", "Q2", "Q3", "Q4")),
+  revenue = c(120, 145, 132, 158)
+)
+```
+
+## A chart without annotations
+
+<!-- DRAFT -->
+
+Start with a plain bar chart. It's accurate, but it doesn't tell the
+reader what to notice. Which quarter matters? Is the trend good or bad?
+The viewer has to do the work.
+
+```{r bare-chart}
+p <- ggplot(revenue, aes(x = quarter, y = revenue)) +
+  geom_col(fill = "steelblue", width = 0.6) +
+  labs(title = "2024 Quarterly Revenue ($K)", x = NULL, y = NULL) +
+  theme_minimal()
+p
+```
+
+## Calling out a key data point
+
+<!-- DRAFT -->
+
+`annotate_callout()` points at a specific row in your data with an
+arrow and label. You tell it *which* row with a filter expression
+(the same syntax as `dplyr::filter()`), and it handles the arrow,
+the box, and the positioning.
+
+```{r callout}
+p +
+  annotate_callout(
+    revenue,
+    where = quarter == "Q4",
+    label = "Record quarter",
+    position = "top-left"
+  )
+```
+
+The `position` argument controls which direction the label sits
+relative to the data point: `"top-right"` (default), `"top-left"`,
+`"bottom-right"`, or `"bottom-left"`.
+
+## Showing the change between two points
+
+<!-- DRAFT -->
+
+`annotate_change()` draws a color-coded arrow between two rows and
+labels the midpoint with the computed delta. Green for increases, red
+for decreases.
+
+```{r change-percent}
+p +
+  annotate_change(
+    revenue,
+    from = quarter == "Q1",
+    to = quarter == "Q4",
+    value = revenue
+  )
+```
+
+The `format` argument controls how the delta is displayed:
+
+```{r change-absolute}
+# Absolute difference
+p +
+  annotate_change(
+    revenue,
+    from = quarter == "Q1",
+    to = quarter == "Q4",
+    value = revenue,
+    format = "absolute"
+  )
+```
+
+```{r change-points}
+# Percentage points — useful when the data is already a rate
+rates <- data.frame(
+  year = 2020:2023,
+  rate = c(3.5, 8.1, 5.4, 3.7)
+)
+
+ggplot(rates, aes(x = year, y = rate)) +
+  geom_line() +
+  geom_point() +
+  annotate_change(
+    rates,
+    from = year == 2020,
+    to = year == 2021,
+    value = rate,
+    format = "points"
+  ) +
+  labs(title = "Unemployment Rate", y = "Rate (%)") +
+  theme_minimal()
+```
+
+## Putting it all together
+
+<!-- DRAFT -->
+
+The real power is combining both annotations on one chart. The callout
+names the moment; the change quantifies it.
+
+```{r combined}
+ggplot(revenue, aes(x = quarter, y = revenue)) +
+  geom_col(fill = "steelblue", width = 0.6) +
+  annotate_callout(
+    revenue,
+    where = quarter == "Q4",
+    label = "Record quarter",
+    position = "top-left"
+  ) +
+  annotate_change(
+    revenue,
+    from = quarter == "Q1",
+    to = quarter == "Q4",
+    value = revenue
+  ) +
+  labs(title = "2024 Quarterly Revenue ($K)", x = NULL, y = NULL) +
+  theme_minimal()
+```
+
+### Multiple change annotations
+
+You can add more than one `annotate_change()` to show
+quarter-over-quarter movement:
+
+```{r multiple}
+ggplot(revenue, aes(x = quarter, y = revenue)) +
+  geom_col(fill = "grey70", width = 0.6) +
+  annotate_change(revenue, from = quarter == "Q1",
+                  to = quarter == "Q2", value = revenue) +
+  annotate_change(revenue, from = quarter == "Q2",
+                  to = quarter == "Q3", value = revenue) +
+  annotate_change(revenue, from = quarter == "Q3",
+                  to = quarter == "Q4", value = revenue) +
+  labs(title = "Quarter-over-Quarter Changes", x = NULL, y = NULL) +
+  theme_minimal()
+```
+
+### Time series example
+
+<!-- DRAFT -->
+
+ggmemo works with Date x-axes too. Here's a savings rate time series
+with a callout at the all-time low and a change annotation showing
+the recovery:
+
+```{r time-series}
+ggplot(economics, aes(x = date, y = psavert)) +
+  geom_line(colour = "grey40") +
+  annotate_callout(
+    economics,
+    where = date == as.Date("2005-07-01"),
+    label = "All-time low",
+    nudge = c(365, 1)
+  ) +
+  annotate_change(
+    economics,
+    from = date == as.Date("2005-07-01"),
+    to = date == as.Date("2012-12-01"),
+    value = psavert,
+    format = "points"
+  ) +
+  labs(
+    title = "U.S. Personal Savings Rate",
+    subtitle = "Recovery after the 2005 low",
+    x = NULL, y = "Savings rate (%)"
+  ) +
+  theme_minimal()
+```
+
+## Customization
+
+### Colors
+
+<!-- DRAFT -->
+
+By default, `annotate_change()` uses dark green for increases, dark
+red for decreases, and grey for no change. Override with the `colors`
+argument:
+
+```{r custom-colors}
+p +
+  annotate_change(
+    revenue,
+    from = quarter == "Q1",
+    to = quarter == "Q4",
+    value = revenue,
+    colors = c(up = "#1B9E77", down = "#D95F02", flat = "#7570B3")
+  )
+```
+
+### Label styling
+
+Both functions accept `...` arguments that pass through to the
+underlying ggplot2 layer. Common overrides:
+
+```{r custom-style}
+p +
+  annotate_callout(
+    revenue,
+    where = quarter == "Q4",
+    label = "Record quarter",
+    position = "top-left",
+    size = 5,
+    fill = "lightyellow",
+    colour = "grey30"
+  )
+```
+
+### Nudge
+
+<!-- DRAFT -->
+
+`annotate_callout()` auto-computes how far to offset the label from
+the data point. When the heuristic doesn't produce the right result
+(common with wide data frames that have many numeric columns), set
+`nudge` explicitly:
+
+```{r nudge}
+ggplot(economics, aes(x = date, y = unemploy)) +
+  geom_line() +
+  annotate_callout(
+    economics,
+    where = date == as.Date("2009-10-01"),
+    label = "Peak unemployment",
+    nudge = c(800, 1000)
+  ) +
+  theme_minimal()
+```
+
+## Common mistakes
+
+<!-- DRAFT — these came from dogfooding sessions -->
+
+### Character columns need `factor()`
+
+If your x-axis column is character (common after `read.csv()`),
+`annotate_change()` will tell you to convert it. Always specify
+`levels` to preserve data order — plain `factor()` sorts
+alphabetically:
+
+```r
+# Wrong — months sort alphabetically (Apr, Feb, Jan, ...)
+data$month <- factor(data$month)
+
+# Right — preserves the order in your data
+data$month <- factor(data$month, levels = unique(data$month))
+```
+
+### Date-like strings need `as.Date()`
+
+If your CSV has dates as strings like `"2024-01-15"`, convert them
+before plotting:
+
+```r
+data$date <- as.Date(data$date)
+```
+
+### Use `colour`, not `color`, in `...`
+
+ggplot2 uses British spelling. American `color` works but may trigger
+a "Duplicated aesthetics" warning when the function already sets a
+default `colour`. Prefer `colour` to be safe:
+
+```r
+annotate_callout(..., colour = "red")
+```
+
+### `size` is text size, not label box size
+
+To make annotation text larger, use `size` (in mm). To adjust the
+box padding, use `label.padding`:
+
+```r
+annotate_callout(..., size = 5, label.padding = unit(0.4, "lines"))
+```
+
+## What ggmemo doesn't do
+
+<!-- DRAFT -->
+
+ggmemo is focused on two specific tasks: callout annotations and
+change annotations. For other annotation needs:
+
+- **Avoiding label overlaps**: use the
+  [ggrepel](https://ggrepel.slowkow.com/) package.
+- **Precise label positioning with NPC coordinates**: use the
+  [ggpp](https://docs.r4photobiology.info/ggpp/) package (which
+  ggmemo is built on).
+- **Interactive annotations** (hover, click): use
+  [plotly](https://plotly.com/r/) or
+  [ggiraph](https://davidgohel.github.io/ggiraph/).
+- **Themes and styling**: use ggthemes, hrbrthemes, or bbplot.

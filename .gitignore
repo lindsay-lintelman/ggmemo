@@ -7,3 +7,6 @@ docs
 .quarto
 README.html
 scratch/
+inst/doc
+/doc/
+/Meta/
