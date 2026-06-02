@@ -1,6 +1,11 @@
 ---
 title: "Narrating Business Charts with ggmemo"
 output: rmarkdown::html_vignette
+description: >
+  Learn how to annotate ggplot2 charts with callout labels and change
+  annotations. Covers callouts, percent change, absolute change,
+  percentage points, multiple annotations, time series, customization,
+  and common mistakes.
 vignette: >
   %\VignetteIndexEntry{Narrating Business Charts with ggmemo}
   %\VignetteEngine{knitr::rmarkdown}
@@ -17,15 +22,19 @@ knitr::opts_chunk$set(
 )
 ```
 
-<!-- DRAFT — rewrite in your voice -->
+A ggplot2 chart shows data. An annotated chart tells a story — it
+directs the reader's attention to the data points that matter and
+quantifies what changed. ggmemo adds that storytelling layer with
+two functions:
 
-A ggplot2 chart shows data. An *annotated* chart tells a story. ggmemo
-adds the storytelling layer: arrows that point at key moments, labels
-that name them, and change annotations that quantify what happened.
+* `annotate_callout()` points at a data row with an arrow and label.
+* `annotate_change()` draws a color-coded arrow between two rows and
+   labels the delta.
 
-This vignette walks through a realistic example — quarterly revenue
-data — from a bare chart to a narrated one, introducing each ggmemo
-function along the way.
+Both return standard ggplot2 layers that you add to a plot with `+`.
+
+This vignette walks through a quarterly revenue dataset from a bare
+chart to a fully narrated one.
 
 ## The data
 
@@ -42,11 +51,9 @@ revenue <- data.frame(
 
 ## A chart without annotations
 
-<!-- DRAFT -->
-
-Start with a plain bar chart. It's accurate, but it doesn't tell the
-reader what to notice. Which quarter matters? Is the trend good or bad?
-The viewer has to do the work.
+This bar chart is accurate, but it doesn't guide the reader. Which
+quarter matters? Is the trend good or bad? The viewer has to figure
+that out on their own.
 
 ```{r bare-chart}
 p <- ggplot(revenue, aes(x = quarter, y = revenue)) +
@@ -58,12 +65,9 @@ p
 
 ## Calling out a key data point
 
-<!-- DRAFT -->
-
 `annotate_callout()` points at a specific row in your data with an
-arrow and label. You tell it *which* row with a filter expression
-(the same syntax as `dplyr::filter()`), and it handles the arrow,
-the box, and the positioning.
+arrow and label. You identify the row with a filter expression — the
+same syntax you use in `dplyr::filter()`:
 
 ```{r callout}
 p +
@@ -75,17 +79,15 @@ p +
   )
 ```
 
-The `position` argument controls which direction the label sits
-relative to the data point: `"top-right"` (default), `"top-left"`,
-`"bottom-right"`, or `"bottom-left"`.
+The `position` argument controls where the label sits relative to
+the data point. Options are `"top-right"` (the default),
+`"top-left"`, `"bottom-right"`, and `"bottom-left"`.
 
 ## Showing the change between two points
 
-<!-- DRAFT -->
-
 `annotate_change()` draws a color-coded arrow between two rows and
-labels the midpoint with the computed delta. Green for increases, red
-for decreases.
+labels the midpoint with the computed delta — green for increases,
+red for decreases:
 
 ```{r change-percent}
 p +
@@ -97,10 +99,14 @@ p +
   )
 ```
 
-The `format` argument controls how the delta is displayed:
+### Format options
+
+The `format` argument controls how the delta is displayed. The
+default is `"percent"`. Other options:
+
+**Absolute difference** — shows the raw numeric change:
 
 ```{r change-absolute}
-# Absolute difference
 p +
   annotate_change(
     revenue,
@@ -111,8 +117,12 @@ p +
   )
 ```
 
+**Percentage points** — useful when the data is already expressed as
+a rate or percentage (e.g., savings rate, market share). Using
+`"percent"` on rate data gives a misleading percent-of-percent;
+`"points"` gives the straightforward difference:
+
 ```{r change-points}
-# Percentage points — useful when the data is already a rate
 rates <- data.frame(
   year = 2020:2023,
   rate = c(3.5, 8.1, 5.4, 3.7)
@@ -134,10 +144,8 @@ ggplot(rates, aes(x = year, y = rate)) +
 
 ## Putting it all together
 
-<!-- DRAFT -->
-
-The real power is combining both annotations on one chart. The callout
-names the moment; the change quantifies it.
+You can combine both functions on one chart. The callout names a
+moment; the change annotation quantifies what happened:
 
 ```{r combined}
 ggplot(revenue, aes(x = quarter, y = revenue)) +
@@ -160,8 +168,8 @@ ggplot(revenue, aes(x = quarter, y = revenue)) +
 
 ### Multiple change annotations
 
-You can add more than one `annotate_change()` to show
-quarter-over-quarter movement:
+You can stack several `annotate_change()` calls to show
+quarter-over-quarter movement across the full series:
 
 ```{r multiple}
 ggplot(revenue, aes(x = quarter, y = revenue)) +
@@ -176,13 +184,14 @@ ggplot(revenue, aes(x = quarter, y = revenue)) +
   theme_minimal()
 ```
 
-### Time series example
+### Time series
 
-<!-- DRAFT -->
-
-ggmemo works with Date x-axes too. Here's a savings rate time series
+ggmemo works with Date x-axes. Here's a savings rate time series
 with a callout at the all-time low and a change annotation showing
-the recovery:
+the recovery. Note the use of `nudge` to manually position the
+callout label — this overrides the automatic heuristic, which can
+miss on wide data frames with many numeric columns (see
+[Nudge](#nudge) below):
 
 ```{r time-series}
 ggplot(economics, aes(x = date, y = psavert)) +
@@ -212,11 +221,10 @@ ggplot(economics, aes(x = date, y = psavert)) +
 
 ### Colors
 
-<!-- DRAFT -->
-
-By default, `annotate_change()` uses dark green for increases, dark
-red for decreases, and grey for no change. Override with the `colors`
-argument:
+`annotate_change()` uses dark green for increases, dark red for
+decreases, and grey for no change by default. You can supply your
+own palette with the `colors` argument — a named vector with
+entries `up`, `down`, and `flat`:
 
 ```{r custom-colors}
 p +
@@ -231,8 +239,9 @@ p +
 
 ### Label styling
 
-Both functions accept `...` arguments that pass through to the
-underlying ggplot2 layer. Common overrides:
+Both functions accept `...`, which passes additional arguments
+through to the underlying ggplot2 layer. Use this to override
+defaults like text size, background fill, or text colour:
 
 ```{r custom-style}
 p +
@@ -247,14 +256,17 @@ p +
   )
 ```
 
-### Nudge
+### Nudge {#nudge}
 
-<!-- DRAFT -->
+`annotate_callout()` automatically computes how far to offset the
+label from the data point based on the data ranges. This works well
+for simple two-column data frames. For wider data frames with many
+numeric columns (like `ggplot2::economics`), the heuristic may pick
+the wrong column's range and produce a label that's too far away or
+too close.
 
-`annotate_callout()` auto-computes how far to offset the label from
-the data point. When the heuristic doesn't produce the right result
-(common with wide data frames that have many numeric columns), set
-`nudge` explicitly:
+You can override the heuristic by passing `nudge = c(x, y)` in
+data units:
 
 ```{r nudge}
 ggplot(economics, aes(x = date, y = unemploy)) +
@@ -268,48 +280,64 @@ ggplot(economics, aes(x = date, y = unemploy)) +
   theme_minimal()
 ```
 
+Alternatively, you can pass a two-column subset of the data so the
+heuristic has less to guess:
+```r
+annotate_callout(
+  economics[, c("date", "unemploy")],
+  where = date == as.Date("2009-10-01"),
+  label = "Peak unemployment"
+)
+```
+
 ## Common mistakes
 
-<!-- DRAFT — these came from dogfooding sessions -->
+These are the most common issues that come up when getting started
+with ggmemo.
 
 ### Character columns need `factor()`
 
-If your x-axis column is character (common after `read.csv()`),
-`annotate_change()` will tell you to convert it. Always specify
-`levels` to preserve data order — plain `factor()` sorts
-alphabetically:
+If your x-axis column is a character vector (common after
+`read.csv()`), `annotate_change()` will error and suggest converting
+it. When you do, always specify `levels` to preserve the order in
+your data — plain `factor()` sorts alphabetically:
 
 ```r
-# Wrong — months sort alphabetically (Apr, Feb, Jan, ...)
+# Alphabetical — probably not what you want
 data$month <- factor(data$month)
 
-# Right — preserves the order in your data
+# Preserves data order
 data$month <- factor(data$month, levels = unique(data$month))
 ```
 
 ### Date-like strings need `as.Date()`
 
-If your CSV has dates as strings like `"2024-01-15"`, convert them
-before plotting:
+CSV files store dates as strings. If your date column looks like
+`"2024-01-15"` but is class `character`, convert it before plotting:
 
 ```r
 data$date <- as.Date(data$date)
 ```
 
-### Use `colour`, not `color`, in `...`
+ggmemo will detect date-like strings and suggest this in the error
+message.
 
-ggplot2 uses British spelling. American `color` works but may trigger
-a "Duplicated aesthetics" warning when the function already sets a
-default `colour`. Prefer `colour` to be safe:
+### Use `colour`, not `color`
+
+ggplot2 uses British spelling internally. American `color` works in
+most contexts, but it can produce a "Duplicated aesthetics" warning
+when the function already sets a default `colour`. Using `colour`
+avoids the warning:
 
 ```r
 annotate_callout(..., colour = "red")
 ```
 
-### `size` is text size, not label box size
+### `size` controls text, not the label box
 
-To make annotation text larger, use `size` (in mm). To adjust the
-box padding, use `label.padding`:
+The `size` argument sets text size (in mm, matching ggplot2
+conventions). To adjust the padding around the text inside the label
+box, use `label.padding`:
 
 ```r
 annotate_callout(..., size = 5, label.padding = unit(0.4, "lines"))
@@ -317,17 +345,17 @@ annotate_callout(..., size = 5, label.padding = unit(0.4, "lines"))
 
 ## What ggmemo doesn't do
 
-<!-- DRAFT -->
+ggmemo is focused on two tasks: callout annotations and change
+annotations for business charts. For other annotation needs, these
+packages are worth knowing:
 
-ggmemo is focused on two specific tasks: callout annotations and
-change annotations. For other annotation needs:
-
-- **Avoiding label overlaps**: use the
-  [ggrepel](https://ggrepel.slowkow.com/) package.
-- **Precise label positioning with NPC coordinates**: use the
-  [ggpp](https://docs.r4photobiology.info/ggpp/) package (which
-  ggmemo is built on).
-- **Interactive annotations** (hover, click): use
-  [plotly](https://plotly.com/r/) or
-  [ggiraph](https://davidgohel.github.io/ggiraph/).
-- **Themes and styling**: use ggthemes, hrbrthemes, or bbplot.
+* **Label overlap avoidance**: [ggrepel](https://ggrepel.slowkow.com/)
+  automatically repositions text labels to avoid overlaps.
+* **Precise NPC positioning**: [ggpp](https://docs.r4photobiology.info/ggpp/)
+  supports normalized parent coordinates and is the package ggmemo
+  builds on.
+* **Interactive annotations**: [plotly](https://plotly.com/r/) and
+  [ggiraph](https://davidgohel.github.io/ggiraph/) support hover
+  tooltips, click events, and zoom.
+* **Themes and styling**: ggthemes, hrbrthemes, and bbplot provide
+  polished chart themes for business and publication contexts.
