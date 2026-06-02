@@ -108,8 +108,5 @@ We are NOT building:
 
 ## v0.2 ideas
 
-- Smarter nudge: accept an `aes()` mapping or infer from the plot object.
-- `...` pass-through to underlying ggpp/ggplot2 geoms for fine styling control.
-- Colorblind mode for `annotate_change()` (blue/orange instead of green/red).
-- Faceting-aware annotations.
-- `annotate_milestone()` — vertical reference line with label (e.g., "Product launch").
+Tracked as GitHub issues with the `v0.2` label:
+https://github.com/lindsay-lintelman/ggmemo/issues?q=label%3Av0.2
