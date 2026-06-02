@@ -1,4 +1,10 @@
-url: ~
+url: https://lindsay-lintelman.github.io/ggmemo/
+
 template:
   bootstrap: 5
 
+home:
+  title: "ggmemo: Add Arrows, Labels, and Change Annotations to ggplot2 Charts"
+  description: >
+    Add callout arrows, highlight data points, and show percent change
+    between rows on ggplot2 charts in one line of code.
