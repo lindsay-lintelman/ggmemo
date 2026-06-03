@@ -134,14 +134,15 @@ annotate_callout <- function(data, where, label, position = "top-right",
     mapping = ggplot2::aes(label = .env$label),
     nudge_x = signs[1] * nudges[["x"]],
     nudge_y = signs[2] * nudges[["y"]],
-    arrow = grid::arrow(length = grid::unit(0.15, "inches")),
-    size = 3.5,
+    arrow = grid::arrow(length = grid::unit(0.2, "inches")),
+    size = 4,
     colour = "grey20",
     fill = "white",
     alpha = 0.9,
-    label.padding = grid::unit(0.25, "lines"),
+    linewidth = 0,
+    label.padding = grid::unit(0.35, "lines"),
     label.r = grid::unit(0.15, "lines"),
-    segment.linewidth = 0.5
+    segment.linewidth = 0.7
   )
 
   # User's ... overrides our defaults

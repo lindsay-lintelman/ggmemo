@@ -233,9 +233,9 @@ annotate_change <- function(data, from, to, value, format = "percent",
     "segment",
     x = from_x, xend = to_x,
     y = from_val, yend = to_val,
-    arrow = grid::arrow(length = grid::unit(0.15, "inches")),
+    arrow = grid::arrow(length = grid::unit(0.2, "inches")),
     colour = color,
-    linewidth = 0.6
+    linewidth = 0.8
   )
 
   label_defaults <- list(
@@ -245,9 +245,10 @@ annotate_change <- function(data, from, to, value, format = "percent",
     label = delta$label,
     colour = color,
     fill = "white",
-    size = 3.5,
+    linewidth = 0,
+    size = 4,
     fontface = "bold",
-    label.padding = grid::unit(0.3, "lines"),
+    label.padding = grid::unit(0.35, "lines"),
     label.r = grid::unit(0.15, "lines")
   )
 
