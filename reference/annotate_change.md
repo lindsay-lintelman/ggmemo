@@ -75,9 +75,9 @@ annotate_change(
 
 - arrow_pad:
 
-  Fraction of the arrow length (in normalised coordinate space) to trim
-  from each endpoint, creating visible whitespace between the arrow and
-  the data points. Defaults to `0.04` (4%). Set to `0` for no gap.
+  Fraction of the y-axis range to lift both arrow endpoints above the
+  data values, creating visible whitespace between the arrow and bars or
+  points. Defaults to `0.04` (4%). Set to `0` for no gap.
 
 - expand_y:
 
