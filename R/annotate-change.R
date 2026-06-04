@@ -1,6 +1,6 @@
 #' Annotate the change between two data points on a ggplot
 #'
-#' Draws a straight arrow between two data rows and labels the midpoint
+#' Draws a curved arrow between two data rows and labels the midpoint
 #' with the computed delta. The label is color-coded: dark green for
 #' increases, dark red for decreases, grey for no change. Built on top of
 #' [ggplot2::annotate()].
@@ -34,6 +34,10 @@
 #'   ([ggplot2::annotate()] with `geom = "label"`). Use to override
 #'   defaults like `size`, `fontface`, or `fill`. Note: these do not
 #'   affect the arrow segment. To change the arrow, use `colors`.
+#' @param curvature Numeric value controlling the curve of the arrow.
+#'   Positive values curve right, negative values curve left. Defaults
+#'   to `-0.2` for a subtle leftward arc. Set to `0` for a straight
+#'   arrow.
 #'
 #' @return A list of ggplot2 layers (arrow + label) that can be added
 #'   to a plot with `+`.
@@ -160,6 +164,7 @@
 annotate_change <- function(data, from, to, value, format = "percent",
                             colors = c(up = "#2E7D32", down = "#B22222",
                                        flat = "#808080"),
+                            curvature = -0.2,
                             ...) {
 
   if (missing(value)) {
@@ -230,12 +235,13 @@ annotate_change <- function(data, from, to, value, format = "percent",
   label_nudge_y <- y_range * 0.03
 
   segment_layer <- ggplot2::annotate(
-    "segment",
+    "curve",
     x = from_x, xend = to_x,
     y = from_val, yend = to_val,
     arrow = grid::arrow(length = grid::unit(0.2, "inches")),
     colour = color,
-    linewidth = 0.8
+    linewidth = 0.8,
+    curvature = curvature
   )
 
   label_defaults <- list(
