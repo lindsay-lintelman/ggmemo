@@ -11,6 +11,7 @@ annotate_change(
   value,
   format = "percent",
   colors = c(up = "#2E7D32", down = "#B22222", flat = "#808080"),
+  curvature = -0.2,
   ...
 )
 }
@@ -46,6 +47,11 @@ a misleading percent-of-percent.}
 for the arrow and label. Names must be \code{"up"}, \code{"down"}, and \code{"flat"}.
 Defaults to dark green, dark red, and grey.}
 
+\item{curvature}{Numeric value controlling the curve of the arrow.
+Positive values curve right, negative values curve left. Defaults
+to \code{-0.2} for a subtle leftward arc. Set to \code{0} for a straight
+arrow.}
+
 \item{...}{Additional arguments passed to the \strong{label} layer
 (\code{\link[ggplot2:annotate]{ggplot2::annotate()}} with \code{geom = "label"}). Use to override
 defaults like \code{size}, \code{fontface}, or \code{fill}. Note: these do not
@@ -56,7 +62,7 @@ A list of ggplot2 layers (arrow + label) that can be added
 to a plot with \code{+}.
 }
 \description{
-Draws a straight arrow between two data rows and labels the midpoint
+Draws a curved arrow between two data rows and labels the midpoint
 with the computed delta. The label is color-coded: dark green for
 increases, dark red for decreases, grey for no change. Built on top of
 \code{\link[ggplot2:annotate]{ggplot2::annotate()}}.

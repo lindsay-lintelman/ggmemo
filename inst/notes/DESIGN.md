@@ -65,7 +65,7 @@ annotate_change(data, from, to, mapping, format = "percent")
 | `format` | character | How to format the delta: "percent", "absolute", "both" |
 
 Design decisions from Week 2 mockup review:
-- **Straight arrow** connecting the two data points (not curved)
+- **Curved arrow** connecting the two data points (default `curvature = -0.2`; set to `0` for straight)
 - **Label at midpoint** of the arrow (not floating above)
 - **Color-coded text:** dark red (#B22222) for negative changes with minus sign,
   dark green (#2E7D32) for positive changes with plus sign
