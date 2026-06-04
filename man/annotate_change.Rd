@@ -12,6 +12,7 @@ annotate_change(
   format = "percent",
   colors = c(up = "#2E7D32", down = "#B22222", flat = "#808080"),
   curvature = -0.2,
+  arrow_pad = 0.04,
   expand_y = TRUE,
   ...
 )
@@ -52,6 +53,11 @@ Defaults to dark green, dark red, and grey.}
 Positive values curve right, negative values curve left. Defaults
 to \code{-0.2} for a subtle leftward arc. Set to \code{0} for a straight
 arrow.}
+
+\item{arrow_pad}{Fraction of the arrow length (in normalised
+coordinate space) to trim from each endpoint, creating visible
+whitespace between the arrow and the data points. Defaults to
+\code{0.04} (4\%). Set to \code{0} for no gap.}
 
 \item{expand_y}{Logical. If \code{TRUE} (default) and \code{curvature} is
 non-zero, adds a \code{scale_y_continuous(expand = ...)} layer to
