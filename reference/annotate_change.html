@@ -127,8 +127,19 @@ affect the arrow segment. To change the arrow, use <code>colors</code>.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A list of ggplot2 layers (arrow + label) that can be added
-to a plot with <code>+</code>.</p>
+    <p>A list of ggplot2 layers (arrow, label, and
+<code>coord_cartesian(clip = "off")</code>) that can be added to a plot
+with <code>+</code>. The coord layer prevents the curved arrow from being
+clipped at the plot boundary.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>The curved arrow may arc outside the default plot area. To prevent
+clipping, this function automatically includes a
+<code>coord_cartesian(clip = "off")</code> layer. If you need a different
+coordinate system (e.g., <code><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html" class="external-link">coord_flip()</a></code>), add it <strong>after</strong>
+<code>annotate_change()</code> so it takes precedence, and set <code>clip = "off"</code>
+on your coord to keep the arrow visible.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -224,6 +235,10 @@ to a plot with <code>+</code>.</p>
 <span class="r-in"><span>                  to <span class="op">=</span> <span class="va">quarter</span> <span class="op">==</span> <span class="st">"Q3"</span>, value <span class="op">=</span> <span class="va">revenue</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>  <span class="fu">annotate_change</span><span class="op">(</span><span class="va">revenue</span>, from <span class="op">=</span> <span class="va">quarter</span> <span class="op">==</span> <span class="st">"Q3"</span>,</span></span>
 <span class="r-in"><span>                  to <span class="op">=</span> <span class="va">quarter</span> <span class="op">==</span> <span class="st">"Q4"</span>, value <span class="op">=</span> <span class="va">revenue</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Coordinate system already present.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Adding new coordinate system, which will replace the existing one.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Coordinate system already present.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Adding new coordinate system, which will replace the existing one.</span>
 <span class="r-plt img"><img src="annotate_change-7.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Year-over-year growth on a line chart</span></span></span>

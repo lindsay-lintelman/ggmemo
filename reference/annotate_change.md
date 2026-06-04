@@ -81,8 +81,20 @@ annotate_change(
 
 ## Value
 
-A list of ggplot2 layers (arrow + label) that can be added to a plot
-with `+`.
+A list of ggplot2 layers (arrow, label, and
+`coord_cartesian(clip = "off")`) that can be added to a plot with `+`.
+The coord layer prevents the curved arrow from being clipped at the plot
+boundary.
+
+## Details
+
+The curved arrow may arc outside the default plot area. To prevent
+clipping, this function automatically includes a
+`coord_cartesian(clip = "off")` layer. If you need a different
+coordinate system (e.g.,
+[`coord_flip()`](https://ggplot2.tidyverse.org/reference/coord_flip.html)),
+add it **after** `annotate_change()` so it takes precedence, and set
+`clip = "off"` on your coord to keep the arrow visible.
 
 ## See also
 
@@ -179,6 +191,10 @@ ggplot(revenue, aes(x = quarter, y = revenue)) +
                   to = quarter == "Q3", value = revenue) +
   annotate_change(revenue, from = quarter == "Q3",
                   to = quarter == "Q4", value = revenue)
+#> Coordinate system already present.
+#> ℹ Adding new coordinate system, which will replace the existing one.
+#> Coordinate system already present.
+#> ℹ Adding new coordinate system, which will replace the existing one.
 
 
 # Year-over-year growth on a line chart

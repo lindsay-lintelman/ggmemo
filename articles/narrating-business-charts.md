@@ -187,6 +187,10 @@ ggplot(revenue, aes(x = quarter, y = revenue)) +
                   to = quarter == "Q4", value = revenue) +
   labs(title = "Quarter-over-Quarter Changes", x = NULL, y = NULL) +
   theme_minimal()
+#> Coordinate system already present.
+#> ℹ Adding new coordinate system, which will replace the existing one.
+#> Coordinate system already present.
+#> ℹ Adding new coordinate system, which will replace the existing one.
 ```
 
 ![](narrating-business-charts_files/figure-html/multiple-1.png)
