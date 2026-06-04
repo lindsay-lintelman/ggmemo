@@ -279,7 +279,7 @@ annotate_change <- function(data, from, to, value, format = "percent",
   label_defaults <- list(
     geom = "label",
     x = mid_x,
-    y = mid_y + label_nudge_y,
+    y = mid_y + pad_y + label_nudge_y,
     label = delta$label,
     colour = color,
     fill = "white",
