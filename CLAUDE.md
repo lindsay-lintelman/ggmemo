@@ -4,16 +4,15 @@ ggmemo is an R package that adds callout and change annotations to
 ggplot2 business charts. Two exported functions: `annotate_callout()`
 and `annotate_change()`. Built on ggpp, uses tidy eval for row
 selection, no dplyr dependency. Target audience: business analysts
-making reports and presentations with ggplot2. The repo is currently
-private.
+making reports and presentations with ggplot2.
 
 ## Required reading
 
 These files contain binding design decisions and project context.
 Read them before making changes:
 
-- `inst/notes/DESIGN.md` — design decisions, known limitations
-- `inst/notes/v0.2-prompt.md` — detailed plan for the next release
+- `notes/DESIGN.md` — design decisions, known limitations
+- `notes/v0.2-prompt.md` — detailed plan for the next release
 - `NEWS.md` — what's shipped
 - `README.md` — user-facing pitch and examples
 
@@ -79,7 +78,7 @@ R/                      Package source
   ggmemo-package.R        Package-level docs
 tests/testthat/         Unit tests and vdiffr snapshots
 vignettes/              "Narrating Business Charts with ggmemo"
-inst/notes/             Design docs, code walkthrough, v0.2 prompt
+notes/                  Design docs, code walkthrough, v0.2 prompt (not installed with package)
 man/                    Generated .Rd help files (don't edit directly)
 .github/workflows/      R-CMD-check, test-coverage, pkgdown
 ```

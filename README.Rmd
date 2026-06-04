@@ -162,6 +162,6 @@ charts. For other annotation needs:
 
 ## Code of Conduct
 
-Please note that ggmemo is released with a [Contributor Code of
-Conduct](https://www.contributor-covenant.org/version/2/1/code_of_conduct/).
-By contributing, you agree to abide by its terms.
+Please note that the ggmemo project is released with a [Contributor Code of
+Conduct](https://lindsay-lintelman.github.io/ggmemo/CODE_OF_CONDUCT.html).
+By contributing to this project, you agree to abide by its terms.
