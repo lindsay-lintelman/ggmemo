@@ -16,6 +16,7 @@ annotate_change(
   format = "percent",
   colors = c(up = "#2E7D32", down = "#B22222", flat = "#808080"),
   curvature = -0.2,
+  expand_y = TRUE,
   ...
 )
 ```
@@ -71,6 +72,14 @@ annotate_change(
   curve right, negative values curve left. Defaults to `-0.2` for a
   subtle leftward arc. Set to `0` for a straight arrow.
 
+- expand_y:
+
+  Logical. If `TRUE` (default) and `curvature` is non-zero, adds a
+  `scale_y_continuous(expand = ...)` layer to prevent the curved arrow
+  from being clipped at the figure edge. The expansion amount scales
+  with `abs(curvature)`. Set to `FALSE` to suppress this and control the
+  y-axis expansion yourself.
+
 - ...:
 
   Additional arguments passed to the **label** layer
@@ -81,10 +90,11 @@ annotate_change(
 
 ## Value
 
-A list of ggplot2 layers (arrow, label, and
-`coord_cartesian(clip = "off")`) that can be added to a plot with `+`.
-The coord layer prevents the curved arrow from being clipped at the plot
-boundary.
+A list of ggplot2 layers (arrow, label, `coord_cartesian(clip = "off")`,
+and optionally `scale_y_continuous(expand = ...)`) that can be added to
+a plot with `+`. The coord layer prevents the curved arrow from being
+clipped at the plot panel boundary; the scale layer expands the y-axis
+to accommodate the curve arc.
 
 ## Details
 
@@ -95,6 +105,13 @@ coordinate system (e.g.,
 [`coord_flip()`](https://ggplot2.tidyverse.org/reference/coord_flip.html)),
 add it **after** `annotate_change()` so it takes precedence, and set
 `clip = "off"` on your coord to keep the arrow visible.
+
+When `expand_y = TRUE` (the default), the function also adds a
+`scale_y_continuous(expand = ...)` layer that pads the y-axis
+proportionally to `abs(curvature)`. If you set your own
+[`scale_y_continuous()`](https://ggplot2.tidyverse.org/reference/scale_continuous.html)
+**after** `annotate_change()`, your scale replaces the one from this
+function.
 
 ## See also
 
@@ -193,8 +210,12 @@ ggplot(revenue, aes(x = quarter, y = revenue)) +
                   to = quarter == "Q4", value = revenue)
 #> Coordinate system already present.
 #> ℹ Adding new coordinate system, which will replace the existing one.
+#> Scale for y is already present.
+#> Adding another scale for y, which will replace the existing scale.
 #> Coordinate system already present.
 #> ℹ Adding new coordinate system, which will replace the existing one.
+#> Scale for y is already present.
+#> Adding another scale for y, which will replace the existing scale.
 
 
 # Year-over-year growth on a line chart

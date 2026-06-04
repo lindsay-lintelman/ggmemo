@@ -189,8 +189,12 @@ ggplot(revenue, aes(x = quarter, y = revenue)) +
   theme_minimal()
 #> Coordinate system already present.
 #> ℹ Adding new coordinate system, which will replace the existing one.
+#> Scale for y is already present.
+#> Adding another scale for y, which will replace the existing scale.
 #> Coordinate system already present.
 #> ℹ Adding new coordinate system, which will replace the existing one.
+#> Scale for y is already present.
+#> Adding another scale for y, which will replace the existing scale.
 ```
 
 ![](narrating-business-charts_files/figure-html/multiple-1.png)

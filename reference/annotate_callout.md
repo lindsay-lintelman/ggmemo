@@ -3,7 +3,7 @@
 Points at a specific data row with an arrow and label. The callout
 consists of a text label inside a rounded box, connected to the target
 data point by a line segment with an arrowhead. Built on top of
-[`ggpp::geom_label_s()`](https://rdrr.io/pkg/ggpp/man/geom_text_s.html).
+[`ggpp::geom_label_s()`](https://docs.r4photobiology.info/ggpp/reference/geom_text_s.html).
 
 ## Usage
 
@@ -55,7 +55,7 @@ annotate_callout(data, where, label, position = "top-right", nudge = NULL, ...)
 - ...:
 
   Additional arguments passed to
-  [`ggpp::geom_label_s()`](https://rdrr.io/pkg/ggpp/man/geom_text_s.html).
+  [`ggpp::geom_label_s()`](https://docs.r4photobiology.info/ggpp/reference/geom_text_s.html).
   Use to override defaults like `size`, `colour`, `fill`, `alpha`, or
   `arrow`.
 
