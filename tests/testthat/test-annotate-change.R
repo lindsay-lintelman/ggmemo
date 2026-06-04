@@ -20,9 +20,10 @@ test_that("annotate_change returns a list of two ggplot2 layers", {
     value = revenue
   )
   expect_type(layers, "list")
-  expect_length(layers, 2)
+  expect_length(layers, 3)
   expect_s3_class(layers[[1]], "LayerInstance")
   expect_s3_class(layers[[2]], "LayerInstance")
+  expect_s3_class(layers[[3]], "CoordCartesian")
 })
 
 

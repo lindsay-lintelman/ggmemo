@@ -58,14 +58,24 @@ defaults like \code{size}, \code{fontface}, or \code{fill}. Note: these do not
 affect the arrow segment. To change the arrow, use \code{colors}.}
 }
 \value{
-A list of ggplot2 layers (arrow + label) that can be added
-to a plot with \code{+}.
+A list of ggplot2 layers (arrow, label, and
+\code{coord_cartesian(clip = "off")}) that can be added to a plot
+with \code{+}. The coord layer prevents the curved arrow from being
+clipped at the plot boundary.
 }
 \description{
 Draws a curved arrow between two data rows and labels the midpoint
 with the computed delta. The label is color-coded: dark green for
 increases, dark red for decreases, grey for no change. Built on top of
 \code{\link[ggplot2:annotate]{ggplot2::annotate()}}.
+}
+\details{
+The curved arrow may arc outside the default plot area. To prevent
+clipping, this function automatically includes a
+\code{coord_cartesian(clip = "off")} layer. If you need a different
+coordinate system (e.g., \code{coord_flip()}), add it \strong{after}
+\code{annotate_change()} so it takes precedence, and set \code{clip = "off"}
+on your coord to keep the arrow visible.
 }
 \examples{
 library(ggplot2)

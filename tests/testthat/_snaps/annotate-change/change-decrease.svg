@@ -19,13 +19,6 @@
 </defs>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 <rect x='0.00' y='0.00' width='720.00' height='576.00' style='stroke-width: 1.07; stroke: #FFFFFF; fill: #FFFFFF;' />
-</g>
-<defs>
-  <clipPath id='cpMzcuNjl8NzE0LjUyfDIyLjc4fDU0NS4xMQ=='>
-    <rect x='37.69' y='22.78' width='676.83' height='522.33' />
-  </clipPath>
-</defs>
-<g clip-path='url(#cpMzcuNjl8NzE0LjUyfDIyLjc4fDU0NS4xMQ==)'>
 <rect x='37.69' y='22.78' width='676.83' height='522.33' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <rect x='86.03' y='160.73' width='96.69' height='360.64' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #B3B3B3;' />
 <rect x='247.18' y='85.60' width='96.69' height='435.78' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #B3B3B3;' />
@@ -36,8 +29,6 @@
 <polygon points='358.51,110.40 393.70,110.40 393.62,110.40 393.95,110.39 394.27,110.32 394.58,110.20 394.87,110.04 395.12,109.83 395.34,109.58 395.52,109.30 395.64,109.00 395.72,108.68 395.75,108.35 395.75,108.35 395.75,95.06 395.75,95.06 395.72,94.73 395.64,94.41 395.52,94.10 395.34,93.83 395.12,93.58 394.87,93.37 394.58,93.21 394.27,93.09 393.95,93.02 393.70,93.01 358.51,93.01 358.75,93.02 358.42,93.01 358.10,93.05 357.78,93.14 357.48,93.28 357.21,93.47 356.97,93.70 356.78,93.96 356.62,94.25 356.52,94.57 356.46,94.89 356.46,95.06 356.46,108.35 356.46,108.19 356.46,108.52 356.52,108.84 356.62,109.15 356.78,109.45 356.97,109.71 357.21,109.94 357.48,110.13 357.78,110.27 358.10,110.36 358.42,110.40 ' style='stroke-width: 0.00; stroke: none; fill: #FFFFFF;' />
 <text x='376.10' y='105.62' text-anchor='middle' style='font-size: 11.38px; font-weight: bold; fill: #B22222; font-family: sans;' textLength='29.73px' lengthAdjust='spacingAndGlyphs'>-9.0%</text>
 <rect x='37.69' y='22.78' width='676.83' height='522.33' style='stroke-width: 1.07; stroke: #333333;' />
-</g>
-<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 <text x='32.76' y='524.40' text-anchor='end' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='4.89px' lengthAdjust='spacingAndGlyphs'>0</text>
 <text x='32.76' y='374.13' text-anchor='end' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='9.79px' lengthAdjust='spacingAndGlyphs'>50</text>
 <text x='32.76' y='223.86' text-anchor='end' style='font-size: 8.80px; fill: #4D4D4D; font-family: sans;' textLength='14.68px' lengthAdjust='spacingAndGlyphs'>100</text>

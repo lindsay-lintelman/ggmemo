@@ -5,6 +5,13 @@
 #' increases, dark red for decreases, grey for no change. Built on top of
 #' [ggplot2::annotate()].
 #'
+#' The curved arrow may arc outside the default plot area. To prevent
+#' clipping, this function automatically includes a
+#' `coord_cartesian(clip = "off")` layer. If you need a different
+#' coordinate system (e.g., `coord_flip()`), add it **after**
+#' `annotate_change()` so it takes precedence, and set `clip = "off"`
+#' on your coord to keep the arrow visible.
+#'
 #' @param data A data frame. Should be the same data frame used in the
 #'   ggplot. Must contain the columns mapped to x and y in the plot's
 #'   `aes()`, as well as the column specified in `value`.
@@ -39,8 +46,10 @@
 #'   to `-0.2` for a subtle leftward arc. Set to `0` for a straight
 #'   arrow.
 #'
-#' @return A list of ggplot2 layers (arrow + label) that can be added
-#'   to a plot with `+`.
+#' @return A list of ggplot2 layers (arrow, label, and
+#'   `coord_cartesian(clip = "off")`) that can be added to a plot
+#'   with `+`. The coord layer prevents the curved arrow from being
+#'   clipped at the plot boundary.
 #'
 #' @concept percent change
 #' @concept annotation
@@ -261,5 +270,7 @@ annotate_change <- function(data, from, to, value, format = "percent",
   label_args <- utils::modifyList(label_defaults, list(...))
   label_layer <- do.call(ggplot2::annotate, label_args)
 
-  list(segment_layer, label_layer)
+  coord_layer <- ggplot2::coord_cartesian(clip = "off")
+
+  list(segment_layer, label_layer, coord_layer)
 }
