@@ -16,6 +16,7 @@ annotate_change(
   format = "percent",
   colors = c(up = "#2E7D32", down = "#B22222", flat = "#808080"),
   curvature = -0.2,
+  arrow_pad = 0.04,
   expand_y = TRUE,
   ...
 )
@@ -71,6 +72,12 @@ annotate_change(
   Numeric value controlling the curve of the arrow. Positive values
   curve right, negative values curve left. Defaults to `-0.2` for a
   subtle leftward arc. Set to `0` for a straight arrow.
+
+- arrow_pad:
+
+  Fraction of the arrow length (in normalised coordinate space) to trim
+  from each endpoint, creating visible whitespace between the arrow and
+  the data points. Defaults to `0.04` (4%). Set to `0` for no gap.
 
 - expand_y:
 
