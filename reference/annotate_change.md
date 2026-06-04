@@ -1,8 +1,8 @@
 # Annotate the change between two data points on a ggplot
 
-Draws a straight arrow between two data rows and labels the midpoint
-with the computed delta. The label is color-coded: dark green for
-increases, dark red for decreases, grey for no change. Built on top of
+Draws a curved arrow between two data rows and labels the midpoint with
+the computed delta. The label is color-coded: dark green for increases,
+dark red for decreases, grey for no change. Built on top of
 [`ggplot2::annotate()`](https://ggplot2.tidyverse.org/reference/annotate.html).
 
 ## Usage
@@ -15,6 +15,7 @@ annotate_change(
   value,
   format = "percent",
   colors = c(up = "#2E7D32", down = "#B22222", flat = "#808080"),
+  curvature = -0.2,
   ...
 )
 ```
@@ -63,6 +64,12 @@ annotate_change(
   Named character vector of length 3 with hex color values for the arrow
   and label. Names must be `"up"`, `"down"`, and `"flat"`. Defaults to
   dark green, dark red, and grey.
+
+- curvature:
+
+  Numeric value controlling the curve of the arrow. Positive values
+  curve right, negative values curve left. Defaults to `-0.2` for a
+  subtle leftward arc. Set to `0` for a straight arrow.
 
 - ...:
 
