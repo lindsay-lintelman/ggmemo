@@ -54,10 +54,10 @@ Positive values curve right, negative values curve left. Defaults
 to \code{-0.2} for a subtle leftward arc. Set to \code{0} for a straight
 arrow.}
 
-\item{arrow_pad}{Fraction of the arrow length (in normalised
-coordinate space) to trim from each endpoint, creating visible
-whitespace between the arrow and the data points. Defaults to
-\code{0.04} (4\%). Set to \code{0} for no gap.}
+\item{arrow_pad}{Fraction of the y-axis range to lift both arrow
+endpoints above the data values, creating visible whitespace
+between the arrow and bars or points. Defaults to \code{0.04} (4\%).
+Set to \code{0} for no gap.}
 
 \item{expand_y}{Logical. If \code{TRUE} (default) and \code{curvature} is
 non-zero, adds a \code{scale_y_continuous(expand = ...)} layer to

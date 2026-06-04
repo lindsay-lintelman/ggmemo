@@ -51,10 +51,10 @@
 #'   Positive values curve right, negative values curve left. Defaults
 #'   to `-0.2` for a subtle leftward arc. Set to `0` for a straight
 #'   arrow.
-#' @param arrow_pad Fraction of the arrow length (in normalised
-#'   coordinate space) to trim from each endpoint, creating visible
-#'   whitespace between the arrow and the data points. Defaults to
-#'   `0.04` (4%). Set to `0` for no gap.
+#' @param arrow_pad Fraction of the y-axis range to lift both arrow
+#'   endpoints above the data values, creating visible whitespace
+#'   between the arrow and bars or points. Defaults to `0.04` (4%).
+#'   Set to `0` for no gap.
 #' @param expand_y Logical. If `TRUE` (default) and `curvature` is
 #'   non-zero, adds a `scale_y_continuous(expand = ...)` layer to
 #'   prevent the curved arrow from being clipped at the figure edge.
@@ -262,40 +262,13 @@ annotate_change <- function(data, from, to, value, format = "percent",
   y_range <- diff(range(data[[value_name]], na.rm = TRUE))
   label_nudge_y <- y_range * 0.03
 
-  x_range <- diff(range(as.numeric(data[[x_col]]), na.rm = TRUE))
-  dx <- as.numeric(to_x) - as.numeric(from_x)
-  dy <- to_val - from_val
-  dx_n <- if (x_range > 0) dx / x_range else 0
-  dy_n <- if (y_range > 0) dy / y_range else 0
-  len_n <- sqrt(dx_n^2 + dy_n^2)
-
-  if (len_n > 0 && arrow_pad > 0) {
-    ux <- dx_n / len_n
-    uy <- dy_n / len_n
-    pad_x <- arrow_pad * ux * x_range
-    pad_y <- arrow_pad * uy * y_range
-    from_x_adj <- as.numeric(from_x) + pad_x
-    from_val_adj <- from_val + pad_y
-    to_x_adj <- as.numeric(to_x) - pad_x
-    to_val_adj <- to_val - pad_y
-  } else {
-    from_x_adj <- as.numeric(from_x)
-    from_val_adj <- from_val
-    to_x_adj <- as.numeric(to_x)
-    to_val_adj <- to_val
-  }
-
-  if (inherits(from_x, "Date")) {
-    from_x_adj <- as.Date(from_x_adj, origin = "1970-01-01")
-    to_x_adj <- as.Date(to_x_adj, origin = "1970-01-01")
-  } else if (inherits(from_x, "POSIXct")) {
-    from_x_adj <- as.POSIXct(from_x_adj, origin = "1970-01-01")
-    to_x_adj <- as.POSIXct(to_x_adj, origin = "1970-01-01")
-  }
+  pad_y <- if (arrow_pad > 0 && y_range > 0) arrow_pad * y_range else 0
+  from_val_adj <- from_val + pad_y
+  to_val_adj <- to_val + pad_y
 
   segment_layer <- ggplot2::annotate(
     "curve",
-    x = from_x_adj, xend = to_x_adj,
+    x = from_x, xend = to_x,
     y = from_val_adj, yend = to_val_adj,
     arrow = grid::arrow(length = grid::unit(0.2, "inches")),
     colour = color,
