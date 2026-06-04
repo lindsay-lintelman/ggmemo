@@ -12,6 +12,12 @@
 #' `annotate_change()` so it takes precedence, and set `clip = "off"`
 #' on your coord to keep the arrow visible.
 #'
+#' When `expand_y = TRUE` (the default), the function also adds a
+#' `scale_y_continuous(expand = ...)` layer that pads the y-axis
+#' proportionally to `abs(curvature)`. If you set your own
+#' `scale_y_continuous()` **after** `annotate_change()`, your scale
+#' replaces the one from this function.
+#'
 #' @param data A data frame. Should be the same data frame used in the
 #'   ggplot. Must contain the columns mapped to x and y in the plot's
 #'   `aes()`, as well as the column specified in `value`.
@@ -45,11 +51,18 @@
 #'   Positive values curve right, negative values curve left. Defaults
 #'   to `-0.2` for a subtle leftward arc. Set to `0` for a straight
 #'   arrow.
+#' @param expand_y Logical. If `TRUE` (default) and `curvature` is
+#'   non-zero, adds a `scale_y_continuous(expand = ...)` layer to
+#'   prevent the curved arrow from being clipped at the figure edge.
+#'   The expansion amount scales with `abs(curvature)`. Set to `FALSE`
+#'   to suppress this and control the y-axis expansion yourself.
 #'
-#' @return A list of ggplot2 layers (arrow, label, and
-#'   `coord_cartesian(clip = "off")`) that can be added to a plot
+#' @return A list of ggplot2 layers (arrow, label,
+#'   `coord_cartesian(clip = "off")`, and optionally
+#'   `scale_y_continuous(expand = ...)`) that can be added to a plot
 #'   with `+`. The coord layer prevents the curved arrow from being
-#'   clipped at the plot boundary.
+#'   clipped at the plot panel boundary; the scale layer expands the
+#'   y-axis to accommodate the curve arc.
 #'
 #' @concept percent change
 #' @concept annotation
@@ -174,6 +187,7 @@ annotate_change <- function(data, from, to, value, format = "percent",
                             colors = c(up = "#2E7D32", down = "#B22222",
                                        flat = "#808080"),
                             curvature = -0.2,
+                            expand_y = TRUE,
                             ...) {
 
   if (missing(value)) {
@@ -272,5 +286,15 @@ annotate_change <- function(data, from, to, value, format = "percent",
 
   coord_layer <- ggplot2::coord_cartesian(clip = "off")
 
-  list(segment_layer, label_layer, coord_layer)
+  layers <- list(segment_layer, label_layer, coord_layer)
+
+  if (expand_y && curvature != 0) {
+    expand_mult <- max(0.05, abs(curvature) * 0.75)
+    scale_layer <- ggplot2::scale_y_continuous(
+      expand = ggplot2::expansion(mult = expand_mult)
+    )
+    layers <- c(layers, list(scale_layer))
+  }
+
+  layers
 }

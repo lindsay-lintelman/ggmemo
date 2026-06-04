@@ -20,10 +20,11 @@ test_that("annotate_change returns a list of two ggplot2 layers", {
     value = revenue
   )
   expect_type(layers, "list")
-  expect_length(layers, 3)
+  expect_length(layers, 4)
   expect_s3_class(layers[[1]], "LayerInstance")
   expect_s3_class(layers[[2]], "LayerInstance")
   expect_s3_class(layers[[3]], "CoordCartesian")
+  expect_s3_class(layers[[4]], "ScaleContinuous")
 })
 
 
@@ -70,6 +71,33 @@ test_that("annotate_change errors with clear message when value is missing", {
     annotate_change(revenue, from = quarter == "Q1", to = quarter == "Q4"),
     "`value` is required"
   )
+})
+
+
+# -- expand_y behaviour --------------------------------------------------------
+
+test_that("annotate_change omits scale layer when curvature is 0", {
+  layers <- annotate_change(
+    revenue,
+    from = quarter == "Q1",
+    to = quarter == "Q4",
+    value = revenue,
+    curvature = 0
+  )
+  expect_length(layers, 3)
+  classes <- vapply(layers, function(x) class(x)[1], character(1))
+  expect_false("ScaleContinuous" %in% classes)
+})
+
+test_that("annotate_change omits scale layer when expand_y = FALSE", {
+  layers <- annotate_change(
+    revenue,
+    from = quarter == "Q1",
+    to = quarter == "Q4",
+    value = revenue,
+    expand_y = FALSE
+  )
+  expect_length(layers, 3)
 })
 
 

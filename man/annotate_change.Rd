@@ -12,6 +12,7 @@ annotate_change(
   format = "percent",
   colors = c(up = "#2E7D32", down = "#B22222", flat = "#808080"),
   curvature = -0.2,
+  expand_y = TRUE,
   ...
 )
 }
@@ -52,16 +53,24 @@ Positive values curve right, negative values curve left. Defaults
 to \code{-0.2} for a subtle leftward arc. Set to \code{0} for a straight
 arrow.}
 
+\item{expand_y}{Logical. If \code{TRUE} (default) and \code{curvature} is
+non-zero, adds a \code{scale_y_continuous(expand = ...)} layer to
+prevent the curved arrow from being clipped at the figure edge.
+The expansion amount scales with \code{abs(curvature)}. Set to \code{FALSE}
+to suppress this and control the y-axis expansion yourself.}
+
 \item{...}{Additional arguments passed to the \strong{label} layer
 (\code{\link[ggplot2:annotate]{ggplot2::annotate()}} with \code{geom = "label"}). Use to override
 defaults like \code{size}, \code{fontface}, or \code{fill}. Note: these do not
 affect the arrow segment. To change the arrow, use \code{colors}.}
 }
 \value{
-A list of ggplot2 layers (arrow, label, and
-\code{coord_cartesian(clip = "off")}) that can be added to a plot
+A list of ggplot2 layers (arrow, label,
+\code{coord_cartesian(clip = "off")}, and optionally
+\code{scale_y_continuous(expand = ...)}) that can be added to a plot
 with \code{+}. The coord layer prevents the curved arrow from being
-clipped at the plot boundary.
+clipped at the plot panel boundary; the scale layer expands the
+y-axis to accommodate the curve arc.
 }
 \description{
 Draws a curved arrow between two data rows and labels the midpoint
@@ -76,6 +85,12 @@ clipping, this function automatically includes a
 coordinate system (e.g., \code{coord_flip()}), add it \strong{after}
 \code{annotate_change()} so it takes precedence, and set \code{clip = "off"}
 on your coord to keep the arrow visible.
+
+When \code{expand_y = TRUE} (the default), the function also adds a
+\code{scale_y_continuous(expand = ...)} layer that pads the y-axis
+proportionally to \code{abs(curvature)}. If you set your own
+\code{scale_y_continuous()} \strong{after} \code{annotate_change()}, your scale
+replaces the one from this function.
 }
 \examples{
 library(ggplot2)
