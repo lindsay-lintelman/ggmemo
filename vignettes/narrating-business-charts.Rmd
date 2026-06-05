@@ -237,6 +237,33 @@ p +
   )
 ```
 
+### Arrow styling
+
+`annotate_change()` supports `arrow_type`, `arrow_pad`, and
+`curvature` for controlling the arrow shape. `annotate_callout()`
+accepts `arrow = NULL` to drop the arrow entirely and show just the
+label:
+
+```{r arrow-styling}
+p +
+  annotate_callout(
+    revenue,
+    where = quarter == "Q4",
+    label = "Record quarter",
+    position = "top-left",
+    arrow = NULL
+  ) +
+  annotate_change(
+    revenue,
+    from = quarter == "Q3",
+    to = quarter == "Q4",
+    value = revenue,
+    arrow_type = "closed",
+    arrow_pad = 0.2,
+    curvature = -0.3
+  )
+```
+
 ### Label styling
 
 Both functions accept `...`, which passes additional arguments
