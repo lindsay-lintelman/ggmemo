@@ -30,6 +30,8 @@ pak::pak("lindsay-lintelman/ggmemo")
 
 ## Examples
 
+*Charts below are rendered at 7 × 4.5 in, 150 dpi.*
+
 ### Callout annotation
 
 Point at a specific data row with an arrow and label:
@@ -39,6 +41,7 @@ Point at a specific data row with an arrow and label:
 library(ggplot2)
 library(ggmemo)
 
+# fig.width = 7, fig.height = 4.5, dpi = 150
 econ <- economics
 econ$unemp_rate <- econ$unemploy / econ$pop * 100
 
@@ -50,7 +53,7 @@ ggplot(econ, aes(x = date, y = unemp_rate)) +
     label = "Volcker recession",
     position = "top-right",
     nudge = c(-1500, 0.5),
-    arrow_size = .05,
+    arrow = NULL,
     point.padding = 2,
     alpha = .7
   ) +
@@ -60,7 +63,7 @@ ggplot(econ, aes(x = date, y = unemp_rate)) +
     label = "'08 Financial Crisis",
     position = "bottom-right",
     nudge = c(-2500, 0.5),
-    arrow_size = .03,
+    arrow = NULL,
     point.padding = 2,
     alpha = .7
   ) +
@@ -88,6 +91,7 @@ Show the delta between two data points with a color-coded arrow:
 
 ``` r
 
+# fig.width = 7, fig.height = 4.5, dpi = 150
 econ <- economics
 econ$unemp_rate <- econ$unemploy / econ$pop * 100
 
@@ -116,6 +120,7 @@ ggplot(econ, aes(x = date, y = unemp_rate)) +
 
 ``` r
 
+# fig.width = 7, fig.height = 4.5, dpi = 150
 quarterly_revenue <- data.frame(
   quarter = factor(c("Q1", "Q2", "Q3", "Q4"),
                    levels = c("Q1", "Q2", "Q3", "Q4")),
