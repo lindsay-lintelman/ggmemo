@@ -185,35 +185,6 @@
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-time-series-change-1.png" alt="" width="100%"></p>
 </div>
-<div class="section level3">
-<h3 id="change-annotation">Change annotation<a class="anchor" aria-label="anchor" href="#change-annotation"></a>
-</h3>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># fig.width = 7, fig.height = 4.5, dpi = 150</span></span>
-<span><span class="va">quarterly_revenue</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>  quarter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Q1"</span>, <span class="st">"Q2"</span>, <span class="st">"Q3"</span>, <span class="st">"Q4"</span><span class="op">)</span>,</span>
-<span>                   levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Q1"</span>, <span class="st">"Q2"</span>, <span class="st">"Q3"</span>, <span class="st">"Q4"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  revenue <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">120</span>, <span class="fl">145</span>, <span class="fl">132</span>, <span class="fl">158</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">quarterly_revenue</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">quarter</span>, y <span class="op">=</span> <span class="va">revenue</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_col</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"steelblue"</span>, width <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="reference/annotate_change.html">annotate_change</a></span><span class="op">(</span></span>
-<span>    <span class="va">quarterly_revenue</span>,</span>
-<span>    from <span class="op">=</span> <span class="va">quarter</span> <span class="op">==</span> <span class="st">"Q3"</span>,</span>
-<span>    to <span class="op">=</span> <span class="va">quarter</span> <span class="op">==</span> <span class="st">"Q4"</span>,</span>
-<span>    value <span class="op">=</span> <span class="va">revenue</span>,</span>
-<span>    arrow_pad <span class="op">=</span> <span class="fl">.2</span>,</span>
-<span>    curvature <span class="op">=</span> <span class="op">-</span><span class="fl">.3</span>,</span>
-<span>    arrow_type <span class="op">=</span> <span class="st">"closed"</span>,</span>
-<span>    y <span class="op">=</span> <span class="fl">180</span>,</span>
-<span>    fill <span class="op">=</span> <span class="cn">NA</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>expand <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/expansion.html" class="external-link">expansion</a></span><span class="op">(</span>mult <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.4</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Quarterly Revenue ($K)"</span>, x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">13</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-change-1.png" alt="" width="100%"></p>
-</div>
 </div>
 <div class="section level2">
 <h2 id="learning-more">Learning more<a class="anchor" aria-label="anchor" href="#learning-more"></a>

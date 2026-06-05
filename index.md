@@ -116,37 +116,6 @@ ggplot(econ, aes(x = date, y = unemp_rate)) +
 
 ![](reference/figures/README-time-series-change-1.png)
 
-### Change annotation
-
-``` r
-
-# fig.width = 7, fig.height = 4.5, dpi = 150
-quarterly_revenue <- data.frame(
-  quarter = factor(c("Q1", "Q2", "Q3", "Q4"),
-                   levels = c("Q1", "Q2", "Q3", "Q4")),
-  revenue = c(120, 145, 132, 158)
-)
-
-ggplot(quarterly_revenue, aes(x = quarter, y = revenue)) +
-  geom_col(fill = "steelblue", width = 0.6) +
-  annotate_change(
-    quarterly_revenue,
-    from = quarter == "Q3",
-    to = quarter == "Q4",
-    value = revenue,
-    arrow_pad = .2,
-    curvature = -.3,
-    arrow_type = "closed",
-    y = 180,
-    fill = NA
-  ) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.4))) +
-  labs(title = "Quarterly Revenue ($K)", x = NULL, y = NULL) +
-  theme_minimal(base_size = 13)
-```
-
-![](reference/figures/README-change-1.png)
-
 ## Learning more
 
 - [`vignette("narrating-business-charts")`](https://lindsay-lintelman.github.io/ggmemo/articles/narrating-business-charts.md)
