@@ -114,25 +114,78 @@
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lindsay-lintelman.github.io/ggmemo/">ggmemo</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">economics</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="va">unemploy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span><span class="va">econ</span> <span class="op">&lt;-</span> <span class="va">economics</span></span>
+<span><span class="va">econ</span><span class="op">$</span><span class="va">unemp_rate</span> <span class="op">&lt;-</span> <span class="va">econ</span><span class="op">$</span><span class="va">unemploy</span> <span class="op">/</span> <span class="va">econ</span><span class="op">$</span><span class="va">pop</span> <span class="op">*</span> <span class="fl">100</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">econ</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="va">unemp_rate</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="reference/annotate_callout.html">annotate_callout</a></span><span class="op">(</span></span>
-<span>    <span class="va">economics</span>,</span>
-<span>    where <span class="op">=</span> <span class="va">date</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2009-10-01"</span><span class="op">)</span>,</span>
-<span>    label <span class="op">=</span> <span class="st">"2009 peak"</span>,</span>
-<span>    position <span class="op">=</span> <span class="st">"top-left"</span>,</span>
-<span>    nudge <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2500</span>, <span class="fl">1500</span><span class="op">)</span></span>
+<span>    <span class="va">econ</span>,</span>
+<span>    where <span class="op">=</span> <span class="va">date</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"1982-12-01"</span><span class="op">)</span>,</span>
+<span>    label <span class="op">=</span> <span class="st">"Volcker recession"</span>,</span>
+<span>    position <span class="op">=</span> <span class="st">"top-right"</span>,</span>
+<span>    nudge <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1500</span>, <span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>    arrow_size <span class="op">=</span> <span class="fl">.05</span>,</span>
+<span>    point.padding <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>    alpha <span class="op">=</span> <span class="fl">.7</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>clip <span class="op">=</span> <span class="st">"off"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"U.S. Unemployment (thousands)"</span>, x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="reference/annotate_callout.html">annotate_callout</a></span><span class="op">(</span></span>
+<span>    <span class="va">econ</span>,</span>
+<span>    where <span class="op">=</span> <span class="va">date</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2009-10-01"</span><span class="op">)</span>,</span>
+<span>    label <span class="op">=</span> <span class="st">"'08 Financial Crisis"</span>,</span>
+<span>    position <span class="op">=</span> <span class="st">"bottom-right"</span>,</span>
+<span>    nudge <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2500</span>, <span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>    arrow_size <span class="op">=</span> <span class="fl">.03</span>,</span>
+<span>    point.padding <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>    alpha <span class="op">=</span> <span class="fl">.7</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="reference/annotate_change.html">annotate_change</a></span><span class="op">(</span></span>
+<span>    <span class="va">econ</span>,</span>
+<span>    from <span class="op">=</span> <span class="va">date</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"1982-12-01"</span><span class="op">)</span>,</span>
+<span>    to <span class="op">=</span> <span class="va">date</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2009-10-01"</span><span class="op">)</span>,</span>
+<span>    value <span class="op">=</span> <span class="va">unemp_rate</span>,</span>
+<span>    arrow_size <span class="op">=</span> <span class="fl">.08</span>,</span>
+<span>    arrow_type <span class="op">=</span> <span class="st">"closed"</span>,</span>
+<span>    curvature <span class="op">=</span> <span class="op">-</span><span class="fl">.3</span>,</span>
+<span>    format <span class="op">=</span> <span class="st">"points"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>expand <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/expansion.html" class="external-link">expansion</a></span><span class="op">(</span>mult <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.15</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"U.S. Unemployment as Share of Population (%)"</span>,</span>
+<span>       x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.margin <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">margin</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">60</span>, <span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-callout-1.png" alt="" width="100%"></p>
 </div>
 <div class="section level3">
-<h3 id="change-annotation">Change annotation<a class="anchor" aria-label="anchor" href="#change-annotation"></a>
+<h3 id="time-series-change">Time series change<a class="anchor" aria-label="anchor" href="#time-series-change"></a>
 </h3>
 <p>Show the delta between two data points with a color-coded arrow:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">econ</span> <span class="op">&lt;-</span> <span class="va">economics</span></span>
+<span><span class="va">econ</span><span class="op">$</span><span class="va">unemp_rate</span> <span class="op">&lt;-</span> <span class="va">econ</span><span class="op">$</span><span class="va">unemploy</span> <span class="op">/</span> <span class="va">econ</span><span class="op">$</span><span class="va">pop</span> <span class="op">*</span> <span class="fl">100</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">econ</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="va">unemp_rate</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"grey40"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="reference/annotate_change.html">annotate_change</a></span><span class="op">(</span></span>
+<span>    <span class="va">econ</span>,</span>
+<span>    from <span class="op">=</span> <span class="va">date</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2009-10-01"</span><span class="op">)</span>,</span>
+<span>    to <span class="op">=</span> <span class="va">date</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2015-03-01"</span><span class="op">)</span>,</span>
+<span>    value <span class="op">=</span> <span class="va">unemp_rate</span>,</span>
+<span>    arrow_pad <span class="op">=</span> <span class="fl">0.05</span>,</span>
+<span>    curvature <span class="op">=</span> <span class="op">-</span><span class="fl">.35</span>,</span>
+<span>    arrow_size <span class="op">=</span> <span class="fl">0.08</span>,</span>
+<span>    x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2015-01-01"</span><span class="op">)</span>,</span>
+<span>    y <span class="op">=</span> <span class="fl">4.95</span>,</span>
+<span>    fill <span class="op">=</span> <span class="cn">NA</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"U.S. Unemployment as Share of Population (%)"</span>,</span>
+<span>       x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-time-series-change-1.png" alt="" width="100%"></p>
+</div>
+<div class="section level3">
+<h3 id="change-annotation">Change annotation<a class="anchor" aria-label="anchor" href="#change-annotation"></a>
+</h3>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">quarterly_revenue</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>  quarter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Q1"</span>, <span class="st">"Q2"</span>, <span class="st">"Q3"</span>, <span class="st">"Q4"</span><span class="op">)</span>,</span>
 <span>                   levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Q1"</span>, <span class="st">"Q2"</span>, <span class="st">"Q3"</span>, <span class="st">"Q4"</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -140,35 +193,22 @@
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">quarterly_revenue</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">quarter</span>, y <span class="op">=</span> <span class="va">revenue</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_col</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"grey70"</span>, width <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_col</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"steelblue"</span>, width <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="reference/annotate_change.html">annotate_change</a></span><span class="op">(</span></span>
 <span>    <span class="va">quarterly_revenue</span>,</span>
-<span>    from <span class="op">=</span> <span class="va">quarter</span> <span class="op">==</span> <span class="st">"Q1"</span>,</span>
+<span>    from <span class="op">=</span> <span class="va">quarter</span> <span class="op">==</span> <span class="st">"Q3"</span>,</span>
 <span>    to <span class="op">=</span> <span class="va">quarter</span> <span class="op">==</span> <span class="st">"Q4"</span>,</span>
-<span>    value <span class="op">=</span> <span class="va">revenue</span></span>
+<span>    value <span class="op">=</span> <span class="va">revenue</span>,</span>
+<span>    arrow_pad <span class="op">=</span> <span class="fl">.2</span>,</span>
+<span>    curvature <span class="op">=</span> <span class="op">-</span><span class="fl">.3</span>,</span>
+<span>    arrow_type <span class="op">=</span> <span class="st">"closed"</span>,</span>
+<span>    y <span class="op">=</span> <span class="fl">180</span>,</span>
+<span>    fill <span class="op">=</span> <span class="cn">NA</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>expand <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/expansion.html" class="external-link">expansion</a></span><span class="op">(</span>mult <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.4</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Quarterly Revenue ($K)"</span>, x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Quarterly Revenue ($K)"</span>, x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">13</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-change-1.png" alt="" width="100%"></p>
-</div>
-<div class="section level3">
-<h3 id="time-series-callout">Time series callout<a class="anchor" aria-label="anchor" href="#time-series-callout"></a>
-</h3>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">economics</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="va">unemploy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"grey40"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="reference/annotate_callout.html">annotate_callout</a></span><span class="op">(</span></span>
-<span>    <span class="va">economics</span>,</span>
-<span>    where <span class="op">=</span> <span class="va">date</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2009-10-01"</span><span class="op">)</span>,</span>
-<span>    label <span class="op">=</span> <span class="st">"2009 peak"</span>,</span>
-<span>    position <span class="op">=</span> <span class="st">"top-left"</span>,</span>
-<span>    nudge <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2500</span>, <span class="fl">1500</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>clip <span class="op">=</span> <span class="st">"off"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"U.S. Unemployment (thousands)"</span>, x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.margin <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">margin</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">60</span>, <span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-time-series-1.png" alt="" width="100%"></p>
 </div>
 </div>
 <div class="section level2">
