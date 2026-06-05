@@ -29,45 +29,28 @@ in one line of code.
 library(ggplot2)
 library(ggmemo)
 
-econ <- economics
-econ$unemp_rate <- econ$unemploy / econ$pop * 100
+revenue <- data.frame(
+  quarter = factor(c("Q1", "Q2", "Q3", "Q4"),
+                   levels = c("Q1", "Q2", "Q3", "Q4")),
+  revenue = c(120, 145, 132, 158)
+)
 
-ggplot(econ, aes(x = date, y = unemp_rate)) +
-  geom_line() +
-  annotate_callout(
-    econ,
-    where = date == as.Date("1982-12-01"),
-    label = "Volcker recession",
-    position = "top-right",
-    nudge = c(-1500, 0.5),
-    arrow = NULL,
-    point.padding = 2,
-    alpha = .7
-  ) +
-  annotate_callout(
-    econ,
-    where = date == as.Date("2009-10-01"),
-    label = "'08 Financial Crisis",
-    position = "bottom-right",
-    nudge = c(-2500, 0.5),
-    arrow = NULL,
-    point.padding = 2,
-    alpha = .7
-  ) +
+ggplot(revenue, aes(x = quarter, y = revenue)) +
+  geom_col(fill = "steelblue", width = 0.6) +
   annotate_change(
-    econ,
-    from = date == as.Date("1982-12-01"),
-    to = date == as.Date("2009-10-01"),
-    value = unemp_rate,
-    arrow_size = .08,
-    arrow_type = "closed",
+    revenue,
+    from = quarter == "Q3",
+    to = quarter == "Q4",
+    value = revenue,
+    arrow_pad = .2,
     curvature = -.3,
-    format = "points"
+    arrow_type = "closed",
+    y = 180,
+    fill = NA
   ) +
-  scale_y_continuous(expand = expansion(mult = c(0.05, 0.15))) +
-  labs(title = "U.S. Unemployment as Share of Population (%)",
-       x = NULL, y = NULL) +
-  theme(plot.margin = margin(10, 60, 10, 10))
+  scale_y_continuous(expand = expansion(mult = c(0, 0.4))) +
+  labs(title = "Quarterly Revenue ($K)", x = NULL, y = NULL) +
+  theme_minimal(base_size = 13)
 ```
 
 ## Overview
@@ -172,34 +155,6 @@ ggplot(econ, aes(x = date, y = unemp_rate)) +
   labs(title = "U.S. Unemployment as Share of Population (%)",
        x = NULL, y = NULL) +
   theme_minimal()
-```
-
-### Change annotation
-
-```{r change, message = FALSE}
-# fig.width = 7, fig.height = 4.5, dpi = 150
-quarterly_revenue <- data.frame(
-  quarter = factor(c("Q1", "Q2", "Q3", "Q4"),
-                   levels = c("Q1", "Q2", "Q3", "Q4")),
-  revenue = c(120, 145, 132, 158)
-)
-
-ggplot(quarterly_revenue, aes(x = quarter, y = revenue)) +
-  geom_col(fill = "steelblue", width = 0.6) +
-  annotate_change(
-    quarterly_revenue,
-    from = quarter == "Q3",
-    to = quarter == "Q4",
-    value = revenue,
-    arrow_pad = .2,
-    curvature = -.3,
-    arrow_type = "closed",
-    y = 180,
-    fill = NA
-  ) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.4))) +
-  labs(title = "Quarterly Revenue ($K)", x = NULL, y = NULL) +
-  theme_minimal(base_size = 13)
 ```
 
 ## Learning more
