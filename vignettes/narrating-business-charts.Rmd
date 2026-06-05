@@ -343,6 +343,97 @@ box, use `label.padding`:
 annotate_callout(..., size = 5, label.padding = unit(0.4, "lines"))
 ```
 
+## Real-world example: NBA Finals scoring breakdown
+
+The examples above use simple, two-column data. Here's a more
+complex chart — a grouped stacked bar chart of quarter-by-quarter
+scoring in an NBA Finals game — that shows how `annotate_change()`
+works when the annotation data differs from the plot data.
+
+Brunson scored 52% of the Knicks' fourth-quarter points after
+contributing just 20% in Q3. To annotate that shift, we pass a
+separate two-row data frame to `annotate_change()` with the x
+positions and values we want to compare, use a custom `label`, and
+set `expand_y = FALSE` so the arrow doesn't push the y-axis beyond
+the bars. We also override the default green with the same orange
+used for Brunson's bars so the annotation feels integrated:
+
+```{r nba-clutch}
+scoring <- data.frame(
+  Quarter = rep(c("Q1", "Q2", "Q3", "Q4"), 4),
+  Team = rep(c("Knicks", "Knicks", "Spurs", "Spurs"), each = 4),
+  Player = rep(c("Brunson", "Rest of Knicks", "Wemby", "Rest of Spurs"), each = 4),
+  Points = c(
+    5, 7, 5, 13,
+    23, 20, 20, 12,
+    8, 9, 7, 4,
+    16, 17, 19, 15
+  )
+)
+
+scoring$Quarter <- factor(scoring$Quarter, levels = c("Q1", "Q2", "Q3", "Q4"))
+scoring$Player <- factor(scoring$Player,
+  levels = c("Rest of Spurs", "Wemby", "Rest of Knicks", "Brunson"))
+
+scoring$x_pos <- as.numeric(scoring$Quarter) +
+  ifelse(scoring$Team == "Knicks", -0.2, 0.2)
+
+team_totals <- aggregate(Points ~ Quarter + Team + x_pos, data = scoring, FUN = sum)
+team_totals <- team_totals[!duplicated(team_totals[, c("Quarter", "Team")]), ]
+
+ggplot(scoring, aes(x = x_pos, y = Points, fill = Player)) +
+  geom_col(width = 0.35) +
+  geom_text(
+    data = team_totals,
+    aes(x = x_pos, y = Points, label = Points, fill = NULL),
+    vjust = -0.4, size = 5, fontface = "bold"
+  ) +
+  scale_fill_manual(
+    values = c(
+      "Brunson" = "#E86A00",
+      "Rest of Knicks" = "#FDCB8B",
+      "Wemby" = "#6D6D6D",
+      "Rest of Spurs" = "#B8B8B8"
+    ),
+    name = NULL
+  ) +
+  scale_x_continuous(breaks = 1:4, labels = c("Q1", "Q2", "Q3", "Q4")) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.12))) +
+  annotate_change(
+    data.frame(x_pos = c(2.8, 3.8), Points = c(5, 13)),
+    from = x_pos == 2.8,
+    to = x_pos == 3.8,
+    value = Points,
+    format = "percent",
+    expand_y = FALSE,
+    label = "20% → 52% of team pts",
+    colors = c(up = "#E86A00", down = "#B22222", flat = "#808080")
+  ) +
+  coord_cartesian(clip = "off") +
+  labs(
+    title = "Quarter-by-Quarter Scoring — Knicks vs Spurs",
+    x = NULL, y = "Points"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    legend.position = "bottom",
+    panel.grid.major.x = element_blank(),
+    plot.margin = margin(10, 20, 10, 10)
+  )
+```
+
+Key techniques used here:
+
+* **Separate annotation data** — the plot uses the full `scoring`
+  data frame, but `annotate_change()` receives a minimal two-row
+  frame with just the x positions and values to compare.
+* **Custom label** — instead of the auto-computed delta, we pass a
+  descriptive `label` that tells the story directly.
+* **`expand_y = FALSE`** — prevents the arrow from adding extra
+  space above the bars.
+* **Custom colors** — `colors = c(up = "#E86A00", ...)` matches the
+  arrow to Brunson's bar color so the annotation looks intentional.
+
 ## What ggmemo doesn't do
 
 ggmemo is focused on two tasks: callout annotations and change

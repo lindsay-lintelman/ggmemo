@@ -50,10 +50,13 @@ ggplot(economics, aes(x = date, y = unemploy)) +
   annotate_callout(
     economics,
     where = date == as.Date("2009-10-01"),
-    label = "Peak unemployment",
-    position = "bottom-left"
+    label = "2009 peak",
+    position = "top-left",
+    nudge = c(-2500, 1500)
   ) +
-  labs(title = "U.S. Unemployment (thousands)", x = NULL, y = NULL)
+  coord_cartesian(clip = "off") +
+  labs(title = "U.S. Unemployment (thousands)", x = NULL, y = NULL) +
+  theme(plot.margin = margin(10, 60, 10, 10))
 ```
 
 <img src="man/figures/README-callout-1.png" alt="" width="100%" />
@@ -77,34 +80,28 @@ ggplot(quarterly_revenue, aes(x = quarter, y = revenue)) +
     to = quarter == "Q4",
     value = revenue
   ) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.4))) +
   labs(title = "Quarterly Revenue ($K)", x = NULL, y = NULL)
 ```
 
 <img src="man/figures/README-change-1.png" alt="" width="100%" />
 
-### Time series with both annotations
+### Time series callout
 
 ``` r
-ggplot(economics, aes(x = date, y = psavert)) +
+ggplot(economics, aes(x = date, y = unemploy)) +
   geom_line(colour = "grey40") +
   annotate_callout(
     economics,
-    where = date == as.Date("2005-07-01"),
-    label = "All-time low",
-    nudge = c(365, 1)
+    where = date == as.Date("2009-10-01"),
+    label = "2009 peak",
+    position = "top-left",
+    nudge = c(-2500, 1500)
   ) +
-  annotate_change(
-    economics,
-    from = date == as.Date("2005-07-01"),
-    to = date == as.Date("2012-12-01"),
-    value = psavert,
-    format = "points"
-  ) +
-  labs(
-    title = "U.S. Personal Savings Rate",
-    x = NULL, y = "Savings rate (%)"
-  ) +
-  theme_minimal()
+  coord_cartesian(clip = "off") +
+  labs(title = "U.S. Unemployment (thousands)", x = NULL, y = NULL) +
+  theme_minimal() +
+  theme(plot.margin = margin(10, 60, 10, 10))
 ```
 
 <img src="man/figures/README-time-series-1.png" alt="" width="100%" />
