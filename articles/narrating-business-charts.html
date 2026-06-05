@@ -299,12 +299,42 @@ with entries <code>up</code>, <code>down</code>, and
 <p><img src="narrating-business-charts_files/figure-html/custom-colors-1.png" class="r-plt" alt="" width="1050"></p>
 </div>
 <div class="section level3">
+<h3 id="arrow-styling">Arrow styling<a class="anchor" aria-label="anchor" href="#arrow-styling"></a>
+</h3>
+<p><code><a href="../reference/annotate_change.html">annotate_change()</a></code> supports <code>arrow_type</code>,
+<code>arrow_pad</code>, and <code>curvature</code> for controlling the
+arrow shape. <code><a href="../reference/annotate_callout.html">annotate_callout()</a></code> accepts
+<code>arrow = NULL</code> to drop the arrow entirely and show just the
+label:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">p</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/annotate_callout.html">annotate_callout</a></span><span class="op">(</span></span>
+<span>    <span class="va">revenue</span>,</span>
+<span>    where <span class="op">=</span> <span class="va">quarter</span> <span class="op">==</span> <span class="st">"Q4"</span>,</span>
+<span>    label <span class="op">=</span> <span class="st">"Record quarter"</span>,</span>
+<span>    position <span class="op">=</span> <span class="st">"top-left"</span>,</span>
+<span>    arrow <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/annotate_change.html">annotate_change</a></span><span class="op">(</span></span>
+<span>    <span class="va">revenue</span>,</span>
+<span>    from <span class="op">=</span> <span class="va">quarter</span> <span class="op">==</span> <span class="st">"Q3"</span>,</span>
+<span>    to <span class="op">=</span> <span class="va">quarter</span> <span class="op">==</span> <span class="st">"Q4"</span>,</span>
+<span>    value <span class="op">=</span> <span class="va">revenue</span>,</span>
+<span>    arrow_type <span class="op">=</span> <span class="st">"closed"</span>,</span>
+<span>    arrow_pad <span class="op">=</span> <span class="fl">0.2</span>,</span>
+<span>    curvature <span class="op">=</span> <span class="op">-</span><span class="fl">0.3</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in (function (geom, x = NULL, y = NULL, xmin = NULL, xmax = NULL, :</span></span>
+<span><span class="co">#&gt; Ignoring unknown parameters: `arrow_type`</span></span></code></pre></div>
+<p><img src="narrating-business-charts_files/figure-html/arrow-styling-1.png" class="r-plt" alt="" width="1050"></p>
+</div>
+<div class="section level3">
 <h3 id="label-styling">Label styling<a class="anchor" aria-label="anchor" href="#label-styling"></a>
 </h3>
 <p>Both functions accept <code>...</code>, which passes additional
 arguments through to the underlying ggplot2 layer. Use this to override
 defaults like text size, background fill, or text colour:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/annotate_callout.html">annotate_callout</a></span><span class="op">(</span></span>
 <span>    <span class="va">revenue</span>,</span>
@@ -328,7 +358,7 @@ heuristic may pick the wrong column’s range and produce a label that’s
 too far away or too close.</p>
 <p>You can override the heuristic by passing
 <code>nudge = c(x, y)</code> in data units:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">economics</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="va">unemploy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/annotate_callout.html">annotate_callout</a></span><span class="op">(</span></span>
@@ -341,7 +371,7 @@ too far away or too close.</p>
 <p><img src="narrating-business-charts_files/figure-html/nudge-1.png" class="r-plt" alt="" width="1050"></p>
 <p>Alternatively, you can pass a two-column subset of the data so the
 heuristic has less to guess:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/annotate_callout.html">annotate_callout</a></span><span class="op">(</span></span>
 <span>  <span class="va">economics</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"date"</span>, <span class="st">"unemploy"</span><span class="op">)</span><span class="op">]</span>,</span>
 <span>  where <span class="op">=</span> <span class="va">date</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2009-10-01"</span><span class="op">)</span>,</span>
@@ -362,7 +392,7 @@ with ggmemo.</p>
 suggest converting it. When you do, always specify <code>levels</code>
 to preserve the order in your data — plain <code><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor()</a></code> sorts
 alphabetically:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Alphabetical — probably not what you want</span></span>
 <span><span class="va">data</span><span class="op">$</span><span class="va">month</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">month</span><span class="op">)</span></span>
 <span></span>
@@ -375,7 +405,7 @@ alphabetically:</p>
 <p>CSV files store dates as strings. If your date column looks like
 <code>"2024-01-15"</code> but is class <code>character</code>, convert
 it before plotting:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span><span class="op">$</span><span class="va">date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">date</span><span class="op">)</span></span></code></pre></div>
 <p>ggmemo will detect date-like strings and suggest this in the error
 message.</p>
@@ -387,7 +417,7 @@ message.</p>
 works in most contexts, but it can produce a “Duplicated aesthetics”
 warning when the function already sets a default <code>colour</code>.
 Using <code>colour</code> avoids the warning:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/annotate_callout.html">annotate_callout</a></span><span class="op">(</span><span class="va">...</span>, colour <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -397,7 +427,7 @@ Using <code>colour</code> avoids the warning:</p>
 <p>The <code>size</code> argument sets text size (in mm, matching
 ggplot2 conventions). To adjust the padding around the text inside the
 label box, use <code>label.padding</code>:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/annotate_callout.html">annotate_callout</a></span><span class="op">(</span><span class="va">...</span>, size <span class="op">=</span> <span class="fl">5</span>, label.padding <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">0.4</span>, <span class="st">"lines"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
@@ -416,7 +446,7 @@ positions and values we want to compare, use a custom
 doesn’t push the y-axis beyond the bars. We also override the default
 green with the same orange used for Brunson’s bars so the annotation
 feels integrated:</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">scoring</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>  Quarter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Q1"</span>, <span class="st">"Q2"</span>, <span class="st">"Q3"</span>, <span class="st">"Q4"</span><span class="op">)</span>, <span class="fl">4</span><span class="op">)</span>,</span>
 <span>  Team <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Knicks"</span>, <span class="st">"Knicks"</span>, <span class="st">"Spurs"</span>, <span class="st">"Spurs"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>,</span>

@@ -257,6 +257,40 @@ p +
 
 ![](narrating-business-charts_files/figure-html/custom-colors-1.png)
 
+### Arrow styling
+
+[`annotate_change()`](https://lindsay-lintelman.github.io/ggmemo/reference/annotate_change.md)
+supports `arrow_type`, `arrow_pad`, and `curvature` for controlling the
+arrow shape.
+[`annotate_callout()`](https://lindsay-lintelman.github.io/ggmemo/reference/annotate_callout.md)
+accepts `arrow = NULL` to drop the arrow entirely and show just the
+label:
+
+``` r
+
+p +
+  annotate_callout(
+    revenue,
+    where = quarter == "Q4",
+    label = "Record quarter",
+    position = "top-left",
+    arrow = NULL
+  ) +
+  annotate_change(
+    revenue,
+    from = quarter == "Q3",
+    to = quarter == "Q4",
+    value = revenue,
+    arrow_type = "closed",
+    arrow_pad = 0.2,
+    curvature = -0.3
+  )
+#> Warning in (function (geom, x = NULL, y = NULL, xmin = NULL, xmax = NULL, :
+#> Ignoring unknown parameters: `arrow_type`
+```
+
+![](narrating-business-charts_files/figure-html/arrow-styling-1.png)
+
 ### Label styling
 
 Both functions accept `...`, which passes additional arguments through
