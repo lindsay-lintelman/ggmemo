@@ -1,6 +1,6 @@
 Package: ggmemo
 Title: Add Arrows, Labels, and Change Annotations to ggplot2 Charts
-Version: 0.1.0.9000
+Version: 0.1.0
 Authors@R:
     person("Lindsay", "Lintelman", , "lindsay.lintelman@posit.co",
            role = c("aut", "cre"))
