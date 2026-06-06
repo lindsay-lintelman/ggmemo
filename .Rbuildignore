@@ -13,3 +13,5 @@
 ^notes$
 ^CODE_OF_CONDUCT\.md$
 ^README\.html$
+^CRAN-SUBMISSION$
+^cran-comments\.md$
