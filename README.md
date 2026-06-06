@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# ggmemo
+# ggmemo <a href="https://lindsay-lintelman.github.io/ggmemo/"><img src="man/figures/logo.png" align="right" height="138" alt="ggmemo hex sticker" /></a>
 
 <!-- badges: start -->
 
